@@ -1,0 +1,30 @@
+Hướng dẫn cài đặt VirtualBox và tạo máy ảo Ubuntu
+
+Yêu cầu
+- Máy tính có hệ điều hành Windows / macOS / Linux
+- Kết nối Internet để tải file
+- Ít nhất 20GB ổ cứng trống và 4GB RAM
+
+Công cụ cần có
+- [VirtualBox](https://www.virtualbox.org/) 
+- [Ubuntu Desktop ISO](https://ubuntu.com/download/desktop) 
+
+
+
+ 1. Cài đặt VirtualBox
+- Tải VirtualBox từ trang chủ: [virtualbox.org](https://www.virtualbox.org/)
+- Chạy file `.exe` và nhấn **Next** → **Install** → **Finish**
+
+
+2. Tạo máy ảo mới
+	1. Mở VirtualBox → nhấn New
+	2. Đặt tên: ví dụ: Ubuntu21  
+	3. Chọn thư mục lưu máy ảo (mặc định OK)
+	4. Chọn file ISO đã tải về
+	5. Bỏ tick ô Unattended Installation (tắt máy ảo -> chuột phải vào máy ảo chọn setting -> xem phần usb tắt dấu tick rồi mở lại máy ảo)
+	6. Cấu hình:
+   		- RAM: 2048 MB hoặc 4096 MB
+   		- CPU: 2 core (hoặc nhiều hơn)
+	7. Ổ cứng: tạo mới với dung lượng 20 GB
+	8. Nhấn Finish
+
