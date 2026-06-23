@@ -1,0 +1,25 @@
+Day 2 - Linux Commands
+
+1. pwd - Xem thư mục hiện tại
+   Ví dụ: pwd -> /home/trung_adm
+
+2. ls - Xem danh sách file
+   Ví dụ: ls -la -> Xem tất cả file và quyền truy cập
+
+3. cd - Di chuyển giữa các thư mục
+   Ví dụ: cd /var/log
+
+4. mkdir - Tạo thư mục mới
+   Ví dụ: mkdir logs
+
+5. touch - Tạo file rỗng
+   Ví dụ: touch notes.txt
+
+6. cp - Copy file
+   Ví dụ: cp auth.log backup.log
+
+7. mv - Di chuyển/đổi tên
+   Ví dụ: mv file.txt /home/user/
+
+8. rm - Xóa file/thư mục
+   Ví dụ: rm -rf temp/
