@@ -1,0 +1,37 @@
+Day3: Linux command (2)
+
+1. cat : xem nội dung file
+vd: cat a.txt
+
+2. grep : tìm kiếm file
+vd: grep abc a.txt #tim kiem cac tu co 'abc'
+
+3. find : tim kiem flie/thu muc
+vd 	find -name *.txt a.txt #tim kiem cac file con co dinh dang .txt
+	find -type abc a.txt #tim kiem cac thu muc con co chua chuoi 'abc'
+	find / -name '*.conf' 2>/dev/null #tim tat ca cac file con cua root (/) co duoi .conf neu ko co quyen truy cap thi bo qua (2>/dev/null) 2-stderr 1-stdout 0-stdin; /dev/null: thung rac
+	
+4. ps: xem cac tien trinh dang chay
+vd:	ps # hien thi cac tien trinh cua terminal
+	ps aux # xem toan bo tien trinh tren he thong
+ket hop: ps aux | grep firefox #xem cac tien trinh cua firefox
+
+5. netstat : xem ket noi mang
+vd:	netstat tulnp
+
+6. sudo <command> : chay cau lenh = quyen admin
+vd:	sudo apt update
+	sudo ls -l
+
+7. chmod <u/o/g +-= x/w/r> file: lenh phan quyen
+trong do : +u: user
+	   +o: other
+	   +g: group
+	   + "+": cap quyen
+	   + "-": xoa quyen
+	   + "=": chi dinh cho co quyen nay (vd neu o=r thi file do cac nguoi dung ben ngoai chi co quyen read)
+	   +x: execute-quyen thuc thi
+	   +w: write-quyen ghi
+	   +r: read-quyen doc
+vd:	chmod g=rw a.txt #nguoi dung thuoc group chi co quyen doc va ghi, ko the execute
+
