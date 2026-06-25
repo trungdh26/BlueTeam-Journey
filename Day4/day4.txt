@@ -1,0 +1,30 @@
+# Day 4 - Cài đặt máy ảo Windows 11
+
+Mục tiêu
+   +Tải file ISO Windows 11.
+   +Tạo máy ảo Windows 11 trên VirtualBox.
+   +Cài đặt Windows 11.
+   +Cài đặt Guest Additions.
+   +Ghi lại quá trình thực hiện.
+
+Cách cài:
+1. Tải Windows 11 ISO
+Tải bộ cài Windows 11 x64(lưu ý ko tải nhầm file amd ko chạy đc) từ trang chủ Microsoft.
+
+2. Tạo máy ảo
+Cấu hình máy ảo: (window cần nhiều ram và cpu hơn linux)
+   + RAM: 10GB
+   + CPU: 4 Core
+   + Ổ cứng: 40GB
+
+3. Cài đặt Windows 11
+Tiến hành cài đặt Windows 11 từ file ISO.
+Trong quá trình cài đặt gặp một số vấn đề:
+   + Màn hình đen sau khi cài đặt được một thời gian.
+   + Quá trình cài đặt dừng khá lâu ở một số mốc phần trăm.
+Sau khi kiểm tra và khởi động lại máy ảo, Windows 11 đã được cài đặt thành công, chờ cho window máy ảo update, cập nhật (Window update)
+
+4. Cài đặt Guest Additions
+Cài đặt VirtualBox Guest Additions để:Tăng khả năng tương thích, hỗ trợ thay đổi độ phân giải, cải thiện thao tác chuột và bàn phím, hỗ trợ chia sẻ clipboard giữa máy thật và máy ảo.
+Cách cài: mở máy ảo-> Device -> Insert Guest Additions.... 
+
