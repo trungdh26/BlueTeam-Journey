@@ -1,0 +1,26 @@
+DAY 5 REVIEW
+
+NHỮNG GÌ ĐÃ HỌC
+
+Trong tuần đầu tiên, tôi đã học cách sử dụng VirtualBox để tạo và quản lý máy ảo. Tôi đã cài đặt thành công Ubuntu Linux và Windows 11 trên máy ảo.
+
+Tôi cũng đã làm quen với các lệnh Linux cơ bản:
+
+pwd: xem thu muc hien thoi
+ls: xem cac thu muc con
+cd: di chuyen vao 1 thu muc
+mkdir: tao 1 thu muc
+touch: tao 1 file rong
+cp: copy file/thu muc vao file/thu muc khac
+mv: di chuyen file/thu muc vao thu muc khac
+rm: xoa file
+cat: xem noi dung file
+grep: tim kiem noi dung trong file
+find: tim file trong cac thu muc
+ps: ktra cac tien trinh dang chay
+netstat: xem thong tin ket noi mang
+sudo: chay lenh = quyen admin
+chmod: lenh phan quyen
+
+
+Tuần đầu tiên, tôi đã nắm được những kiến thức cơ bản về máy ảo và Linux. Tôi có thể tạo và sử dụng máy ảo Ubuntu, Windows 11, đồng thời thực hiện các thao tác quản lý file và hệ thống bằng Terminal Linux.
