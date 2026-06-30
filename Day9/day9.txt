@@ -1,0 +1,41 @@
+
+DAY 9 -SU DUNG WIRESHARK
+
+
+WIRESHARK theo ý hiểu của tôi:
+-Vị trí của wireshar:
+ Máy tính của tôi ()------> router wifi (để truyền dữ liệu ra ngoài). Trong đó () chính là cánh cổng để truyền gói tin từ máy đến router. wireshark đc đặt ở đây để nghe. 
+-Về wireshark, có 3 chức năng (chế độ): 
+ +Promiscuous Mode: Dùng cho dây mạng (Ethernet). Hầu hết chỉ nghe được gói tin của chính máy mình.
+ +Monitor Mode (Chế độ giám sát): Là chìa khóa để Wireshark trên WiFi có thể bắt được gói tin của các thiết bị khác (như điện thoại) vì nó thu toàn bộ sóng WiFi trong không khí. Đây là chế độ bạn đang muốn tìm để nghe trộm WiFi.
+ *Với các máy dùng cáp nối thẳng đến router ( máy cây dùng dâu mạng) thì wireshark ko bắt đc vì gói tin đc truyền trên dây cáp >< không phải truyển bằng sóng vô tuyến)
+
+1. Cac bo loc Display Filter
+http                 -> Loc goi tin HTTP
+dns                  -> Loc goi tin DNS
+tcp                  -> Loc goi tin TCP
+ip.addr == 8.8.8.8   -> Loc goi tin co IP 8.8.8.8
+tcp.port == 80       -> Loc goi tin tren port 80
+
+2. TCP 3-Way Handshake
+Qua trinh thiet lap ket noi TCP gom 3 buoc:
+1. Client -> Server: SYN (Toi muon ket noi!)
+2. Server -> Client: SYN-ACK (OK, toi san sang!)
+3. Client -> Server: ACK (Bat dau gui du lieu!)
+
+3. Cac thong so TCP quan trong
+Seq  -> So thu tu byte trong luong du lieu
+Ack  -> So byte tiep theo ma may nhan dang cho
+Len  -> So byte du lieu trong goi tin
+Win  -> Cua so nhan (dung luong dem con trong)
+
+
+3. THUC HANH:
+Bật wireshark-> chọn chế độ enp0s3
+1.chọn start... để bắt đầu bắt gói
+2.curl http://example.com (hoặc truy cập trục tiếp vào link = trình duyệt)
+3.chọn end... đặt dừng việc bắt gói
+4.dùng bộ học filter để lọc http, dns, tcp, ròi xem các thông số liên quan đã học
+
+Quan sat duoc cap goi Request (GET / HTTP/1.1) va Response (HTTP/1.1 200 OK). Chu y cac cot nhu ip src, ip des, port, giao thuc http,tcp dns,...
+
