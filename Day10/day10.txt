@@ -1,0 +1,57 @@
+Day 10 -Window event log
+
+
+1. Lý thuyết
+Event Viewer là công cụ ghi nhật ký hệ thống của Windows ghi lại các hoạt động như là login,logout,update,...của máy tính.
+Trong dó có Security Log ghi lại tất cả các sự kiện liên quan đến bảo mật, bao gồm đăng nhập, xuất, và thay đổi quyền.
+
+2. Các Event ID quan trọng trong Security Log:
+| Event ID | Tên sự kiện          | Ý nghĩa                                               |
+|----------|----------------------|-------------------------------------------------------|
+| 4624     | Logon                | Đăng nhập thành công.                                 |
+| 4625     | Logon Failed         | Đăng nhập thất bại.                                   |
+| 4672     | Special Logon        | Đăng nhập với quyền Administrator (Admin).            |
+| 4688     | Process Creation     | Một tiến trình mới được tạo (ví dụ: mở Notepad).      |
+| 4647     | User Initiated Logoff| Người dùng bắt đầu đăng xuất.                         |
+| 1074     | System Shutdown      | Máy tính được tắt hoặc khởi động lại bởi người dùng.  |
+
+3. Thực hành: (Máy ảo win 10)
+
+B1: Window+R tìm kiếm 'eventvwr.msc' hoặc gõ thành tìm kiếm tìm Event Viewer -> mở Event Viewer
+B2: vào mục /Windows Logs/Security
+
+3.1. Quan sát Event 4624 (Đăng nhập thành công)
+- Hành động: Đăng nhập vào máy ảo Windows bằng tài khoản 'trung' (Admin).
+- Kết quả: Event 4624 xuất hiện với Logon Type = 2 (Logon Type=10: đăng nhập từ xa( RemoteInteractive-RDP/SSH) (đăng nhập trực tiếp).
+ ->Mọi đăng nhập thành công đều được ghi lại với thời gian và loại đăng nhập.
+
+3.2. Quan sát Event 4625 (Đăng nhập thất bại)
+- Hành động: Cố tình nhập sai mật khẩu 3 lần liên tiếp.
+- Kết quả: Event 4625 xuất hiện với thông tin tài khoản 'trung' và mã lỗi 0xC000006A (sai mật khẩu).
+ -> Giúp phát hiện tấn công Brute-force nếu có nhiều lần thất bại trong thời gian ngắn.
+
+3.3. Quan sát Event 4672 (Đăng nhập Admin)
+- Hành động: Đăng nhập bằng tài khoản Administrator.
+- Kết quả: Event 4672 xuất hiện ngay sau Event 4624.
+ -> Xác nhận tài khoản đang đăng nhập có quyền quản trị viên. Nếu không phải mình log, đó là dấu hiệu đáng ngờ.
+
+3.4. Quan sát Event 4688 (Tiến trình mới)
+- Hành động: Mở Notepad và Command Prompt.
+- Kết quả: Event 4688 ghi lại đường dẫn và tên tiến trình.
+ -> Phát hiện phần mềm độc hại đang chạy (ví dụ: malware.exe từ thư mục lạ).
+
+*NOTE: có thể dùng chứ năng Filter Current Log... để lọc các log theo ngày, theo ID,...
+hoặc Import Custom View... để lọc nâng cao hơn kiểu truy vấn
+
+4. đăng nhập thông qua ssh ( kết nối 2 máy từ xa)
+Kết nối SSH từ máy thật (Windows 11) vào máy ảo (Windows 10) để thực hành Remote Logon:
+(cách kết nối: lấy ip+username máy ảo ( ipconfig+Whoami). Ở máy thật: cmd: ssh username@ip - nhập pass đăng nhập của máy ảo)
+
+- SSH log KHÔNG được ghi trong window security Log (không có Event 4624).
+- SSH log được lưu tại: Applications and Services Logs > OpenSSH > Operational.
+- Trong log SSH, thông tin chi tiết bao gồm:
+  - Tên tài khoản đăng nhập (Account Name).
+  - Địa chỉ IP nguồn (Source IP).
+  - Cổng kết nối (Port).
+- Sau khi SSH thành công, log hiển thị rõ ràng IP nguồn.
+
