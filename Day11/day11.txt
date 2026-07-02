@@ -1,0 +1,47 @@
+
+DAY11 - LOG LINUX
+
+
+1. Lí thuyết
+- Linux lưu trữ log dưới dạng file văn bản thuần túy trong thư mục /var/log/.
+- Không có Event ID như Windows. Thay vào đó, ta dùng từ khóa (keyword) để tìm kiếm.
+- Hai file log quan trọng:
+  + /var/log/auth.log: Ghi lại các sự kiện xác thực (đăng nhập, đăng xuất, SSH, sudo).
+  + /var/log/syslog: Ghi lại các sự kiện hệ thống chung (khởi động dịch vụ, lỗi kernel...).
+
+2. Một số lệnh cơ bản
+- sudo cat /var/log/auth.log      : Xem toàn bộ log xác thực.
+- sudo cat /var/log/syslog        : Xem toàn bộ log hệ thống.
+- grep "Failed" /var/log/auth.log : Lọc các dòng log có chứa từ khóa "Failed".
+cac tu khoa :(Failed/Accepted password, Invalid user: check ai dó đang thử các user ko có thật, session opened/close: xác nhận user đăng nhập/đăng xuất, sudo: ktra ai dùng quyền sudo, ssh,dhcp: ktra sự cố ip, DNS: phát hiện lỗi phân giải lên miền
+- tail -f /var/log/auth.log       : Xem log theo thời gian thực (real-time).
+- tail -n 20 /var/log/auth.log    : Xem 20 dòng cuối cùng của log.
+
+3. Thực hành 1 số lệnh:
+3.1. Đọc log xác thực (auth.log)
+- Dùng lệnh sudo cat /var/log/auth.log để xem toàn bộ log.
+- Nhận xét: Log ghi các trường sau: thời gian, tên máy, tiến trình, hành động.
+
+3.2. Lọc log đăng nhập thất bại 
+- Dùng lệnh: grep "Failed password" /var/log/auth.log
+- Các thuộc tính quan trọng: 
+  + Thời gian
+  + Tên user
+  + Địa chỉ IP nguồn 
+  + Lý do thất bại (sai mật khẩu).
+
+3.3. Xem log đăng nhập thành công
+- Dùng lệnh: grep "Accepted password" /var/log/auth.log
+- Log ghi lại các lần đăng nhập thành công.
+-> Nếu thấy IP lạ trong log này -> có thể máy đã bị xâm nhập.
+
+3.4. Theo dõi log thời gian thực
+- Dùng lệnh: sudo tail -f /var/log/auth.log
+- Thực hành: Mở một terminal khác, SSH vào máy Linux.
+- Kết quả: Log xuất hiện ngay lập tức trên màn hình. (ghi ra log mới ngay khi xuất hiện mà ko càn chạy 1 lệnh nhiều lần)
+-> Giúp giám sát hệ thống để phát hiện tấn công đang diễn ra.
+
+4. Nhận xét
+- Linux log là công cụ quan trọng để phát hiện xâm nhập.
+- Dùng grep, tail -f giúp tiết kiệm thời gian phân tích log.
+
