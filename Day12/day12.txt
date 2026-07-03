@@ -1,0 +1,35 @@
+Day 12: TỔNG HỢP LOG Window-Linux
+
+
+1. Giống và khác:
+1.1. Điểm giống nhau
+- Cả hai đều ghi lại các sự kiện hệ thống và bảo mật (đăng nhập, đăng xuất, lỗi).
+- Cả hai đều có thể được lọc và tìm kiếm (Windows dùng Event ID, Linux dùng keyword).
+
+
+1.2. Điểm khác nhau
+| Tiêu chí          | Windows (Event Log)                     | Linux (Log Files)                       
+|-------------------|-----------------------------------------|-----------------------------------------
+| Định dạng         | Có cấu trúc (Event ID, XML, bảng)       | Văn bản thuần túy (plain text)          
+| Cách lọc          | Lọc theo Event ID (4624, 4625, 4672...) | Lọc theo từ khóa (grep "Failed")        
+| Công cụ xem       | Event Viewer                            | Terminal (cat, grep, tail, less, awk)   
+| Log thành công    | Event 4624: Logon successful            | "Accepted password for user from IP"    
+| Log thất bại      | Event 4625: Logon failed                | "Failed password for user from IP"      
+| Đặc điểm          | Dễ đọc, có giao diện, dễ quan sát       | Khó đọc hơn vì phải đọc = lệnh grep,tail,...
+
+2. Thực hành: cố ý nhập sai mk
+
+2.1. Trên Windows 11 (Máy thật)
+- Hành động: Nhập sai mật khẩu 3 lần
+- Kết quả: 
+  + Event 4625 (thất bại)
+  + Event 4624 (thành công)
+-> Windows ghi rõ lỗi, thời gian, và tài khoản bị tấn công, ko ghi ip của ng tấn công
+
+2.2. Trên Linux (Ubuntu 21)
+- Hành động: SSH sai mật khẩu 3 lần vào máy ảo.
+- Kết quả:
+  + Log thất bại: "Failed password for username from 192.168.x.x".
+  + Log thành công: "Accepted password for username from 192.168.x.x".
+-> Linux log hiển thị rõ ràng thời gian, user, IP nguồn.
+
