@@ -1,0 +1,20 @@
+🚨 TÌNH HUỐNG THỰC TẾ: "CÓ AI ĐÓ VỪA XÂM NHẬP VÀO HỆ THỐNG?"
+Bối cảnh: Công ty của bạn có một máy chủ Web (giả định là máy ảo Linux của bạn) và một máy trạm (máy ảo Windows của bạn). Sáng nay, nhân viên báo cáo rằng máy chủ chạy rất chậm và có vẻ như đã có ai đó tấn công vào lúc nửa đêm. Bạn cần kiểm tra lại các sự kiện đã xảy ra.
+
+
+NHIỆM VỤ 1: ĐIỀU TRA VẾT CHÂN BẰNG LOG: kiểm tra lại log của máy chủ để xem kẻ tấn công đã làm gì và có thành công không.
+Hỏi:
+1. Có IP nào thử nhiều lần không? 
+2. Có kết nối thành công từ IP lạ không?
+3. Có bao nhiêu lần thất bại trong 1 phút? 
+4. Xác nhận tấn công có thành công hay không?
+5. Hacker đã làm gì sau khi đăng nhập?
+
+
+NHIỆM VỤ 2: ĐIỀU TRA TẤN CÔNG BẰNG WIRESHARK: nghi ngờ máy chủ của mình bị kẻ tấn công từ bên ngoài quét cổng (Port Scanning) và thử đoán mật khẩu SSH (Brute-force).
+Hỏi:
+1. Kẻ tấn công có IP là gì?
+2. Chúng đang thử cổng nào?
+3. Có kẻ tấn công đang Brute-force SSH không?
+4. Xác định IP của kẻ tấn công và chặn chúng trên Firewall.
+5. Xác định dịch vụ nào đang bị tấn công (ví dụ: port 22 là SSH, port 3389 là RDP) để ưu tiên bảo vệ.

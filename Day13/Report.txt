@@ -1,0 +1,100 @@
+BÁO CÁO ĐIỀU TRA SỰ CỐ 
+
+Người thực hiện: Trung
+Ngày điều tra: 04/07/2026
+Máy chủ bị tấn công: Ubuntu 21 (IP: 192.168.1.154)
+Công cụ sử dụng: Hydra (mô phỏng tấn công), Wireshark (bắt gói tin), Log analysis (`/var/log/auth.log`)
+
+
+A. TRẢ LỜI CÁC CÂU HỎI ĐIỀU TRA
+A.1. ĐIỀU TRA TỪ LOG
+1. IP nào đã thử đăng nhập nhiều lần?
+   - IP 192.168.1.154 (chính máy chủ) đã thử 6 lần.
+   - Trong thực tế, đây sẽ là IP của kẻ tấn công.
+   - Cách kiểm tra: sudo grep "Failed password" /var/log/auth.log
+
+2. Có bao nhiêu lần thất bại trong 1 phút?
+   - 6 lần thất bại trong khoảng 15 giây.
+   - Điều này cho thấy đây là một cuộc tấn công tự động (Hydra chạy với tốc độ cao).
+
+3. Có kết nối thành công từ IP lạ không?
+   - CÓ. Một kết nối thành công từ IP 192.168.1.154.
+   - Bằng chứng: dòng "Accepted password for trung_adm from 192.168.1.154 port 54066 ssh2".
+   - Cách kiểm tra: sudo grep "Accepted password" /var/log/auth.log
+
+4. Tấn công có thành công không?
+   - CÓ. Hydra đã tìm đúng mật khẩu (1234) và đăng nhập thành công.
+   - Kẻ tấn công đã vượt qua được cơ chế xác thực.
+
+5. Hacker đã làm gì sau khi đăng nhập thành công?
+   - Hacker đã tạo 1 file là hacker.txt sau khi đăng nhập thành công.
+
+
+A.2. ĐIỀU TRA TỪ WIRESHARK
+1. Kẻ tấn công có IP là gì?
+   - IP 192.168.1.154 (máy chủ tự tấn công chính mình).
+   - Cách xem: Quan sát cột "Source" trong Wireshark với filter tcp.port == 22.
+
+2. Chúng đang thử cổng nào?
+   - Cổng 22 (SSH).
+
+3. Có kẻ tấn công đang Brute-force SSH không?
+   - CÓ. Wireshark hiển thị nhiều gói tin SSH từ cùng một IP đến cổng 22.
+   - Dấu hiệu: Số lượng gói tin tăng đột biến, nhiều kết nối trong thời gian ngắn.
+
+4. Dịch vụ nào đang bị tấn công?
+   - SSH (cổng 22).
+   - Đây là dịch vụ quản trị từ xa, nếu bị chiếm quyền sẽ rất nguy hiểm.
+
+5. Làm thế nào để chặn IP tấn công trên Firewall?
+   - Lệnh chặn: sudo ufw deny from 192.168.1.154 to any port 22
+   - Kiểm tra: sudo ufw status
+   - Để bật Firewall (nếu chưa): sudo ufw enable
+
+
+B. GIẢI THÍCH CÁC CÂU LỆNH ĐÃ SỬ DỤNG
+1. Hydra: Tấn công Brute-force
+   hydra -l trung_adm -P pass.txt ssh://192.168.1.154 -t 1
+   - -l trung_adm: Tên tài khoản cần thử.
+   - -P pass.txt: File chứa danh sách mật khẩu.
+   - ssh://192.168.1.154: Mục tiêu là dịch vụ SSH trên IP này.
+   - -t 1: Chỉ dùng 1 luồng (chậm nhưng ổn định).
+
+2. grep: Lọc log tìm từ khóa
+   sudo grep "Failed password" /var/log/auth.log
+   - Tìm tất cả các dòng có chứa "Failed password" (đăng nhập thất bại).
+   - sudo grep "Accepted password" /var/log/auth.log
+   - Tìm tất cả các dòng có chứa "Accepted password" (đăng nhập thành công).
+
+3. tail -f: Theo dõi log thời gian thực
+   sudo tail -f /var/log/auth.log
+   - Hiển thị 10 dòng cuối cùng và cập nhật liên tục khi có dòng mới.
+
+4. ls -la : hiển thị thông tin các file tỏng thư mục đang đứng.
+   - kiểm tra các file mới tạo.
+   - Thấy bất thường thì xóa file.
+
+5. ufw: Chặn IP trên Firewall
+   sudo ufw deny from 192.168.1.154 to any port 22
+   - Chặn tất cả kết nối từ IP 192.168.1.154 đến cổng 22 (SSH).
+
+
+C. KẾT LUẬN VÀ HÀNH ĐỘNG KHẮC PHỤC
+1. Kết luận:
+   - Cuộc tấn công Brute-force SSH đã xảy ra và thành công.
+   - Kẻ tấn công đã có được quyền truy cập shell vào máy chủ, đã tạo 1 file hacker.txt
+   - Sự cố được phát hiện nhờ kết hợp phân tích log và bắt gói tin mạng.
+
+2. Hành động khắc phục ngay lập tức:
+   - Xóa file độc mà hacker đã tạo (hacker.txt)
+   - Chặn IP tấn công trên Firewall: sudo ufw deny from 192.168.1.154 to any port 22
+   - Đổi mật khẩu của tài khoản trung_adm ngay lập tức.
+   - Kiểm tra lịch sử lệnh của phiên shell đã bị xâm nhập để đánh giá thiệt hại.
+  
+3. Hành động phòng ngừa lâu dài:
+   - Bật Fail2ban để tự động chặn IP sau 5 lần thử sai.
+   - Sử dụng mật khẩu mạnh (ít nhất 12 ký tự, bao gồm chữ hoa, thường, số, ký tự đặc biệt).
+   - Bật xác thực 2 yếu tố (MFA) cho SSH.
+   - Giới hạn số lần đăng nhập thất bại (Account Lockout Policy trên Windows, hoặc PAM trên Linux).
+   - Thường xuyên kiểm tra log và giám sát hệ thống.
+
