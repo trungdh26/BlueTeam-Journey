@@ -1,0 +1,44 @@
+NGÀY 15 - Tryhackme-Network
+
+** Tôi đã đăng kí và tự học THM ngay từ những ngày đầu của Blueteam-Journey. Do vậy trong 1-2 tuần tới, sẽ có 1 vài kiến thức tôi đã được học rồi. Vậy nên tôi sẽ tổng hợp lại các kiến thức tôi đã học. Bên cạnh đó thôi sẽ cải thiện kiến thức về network ( kiến thức tôi đang bị hổng)
+
+1. Bức tranh tổng thể về Network
+
+Mô tả theo ý hiểu: khi gửi 1 bức ảnh từ thiết bị A ---> thiết bị B.
+- Về LÝ THUYẾT quá trình này sẽ đc truyền thông qua mô hình ÓI 7 tầng.
+- Trong THỰC TẾ: Người ta dùng mô hình TCP/IP 4 tầng (gọn nhẹ, hiệu quả).
+- Điểm quan trọng: Cả hai mô hình đều mô tả cùng một quá trình, chỉ khác nhau về cách phân chia các tầng.
+
+2. MÔ HÌNH OSI - 7 TẦNG KINH ĐIỂN
+Tầng 7 - Application (Ứng dụng): Giao diện người dùng (HTTP, DNS, SMTP).
+Tầng 6 - Presentation (Trình diễn): Mã hóa, nén dữ liệu (SSL/TLS, JPEG).
+Tầng 5 - Session (Phiên): Thiết lập, quản lý kết nối.
+Tầng 4 - Transport (Vận chuyển): Vận chuyển dữ liệu (TCP - có bảo hiểm, UDP - nhanh).
+Tầng 3 - Network (Mạng): Định tuyến, địa chỉ IP (IP, ICMP).
+Tầng 2 - Data Link (Liên kết dữ liệu): Đóng gói frame, địa chỉ MAC (Ethernet, ARP).
+Tầng 1 - Physical (Vật lý): Tín hiệu điện, cáp, sóng WiFi.
+
+4. Mô hình 4 tầng TCP/IP
+Tầng 4 - Application (Ứng dụng): Giao diện người dùng + Mã hóa + Phiên (HTTP, DNS, SSH, SMTP).
+Tầng 3 - Transport (Vận chuyển): Vận chuyển dữ liệu (TCP - có bảo hiểm, UDP - nhanh).
+Tầng 2 - Internet (Mạng): Định tuyến, địa chỉ IP (IP, ICMP).
+Tầng 1 - Network Access (Truy cập mạng): Đóng gói frame + MAC + Tín hiệu vật lý (Ethernet, ARP, WiFi).
+
+3. Mô tả các thức hoạt động
+[Ứng dụng] -> [Port] -> [TCP/UDP] -> [IP] -> [MAC] -> [Vật lý]
+- Ứng dụng (Tầng 7): Tạo ra dữ liệu (ví dụ: ảnh, văn bản).
+- Port (Tầng 4): Phân biệt ứng dụng nào nhận dữ liệu nào (80: HTTP, 443: HTTPS, 22: SSH).
+- TCP/UDP (Tầng 4): Vận chuyển (TCP đảm bảo, UDP nhanh).
+- IP (Tầng 3): Gửi gói tin đến đúng máy tính (địa chỉ nhà).
+- MAC (Tầng 2): Gửi gói tin đến đúng thiết bị trong mạng LAN.
+- Vật lý (Tầng 1): Biến dữ liệu thành tín hiệu để truyền đi.
+
+4. VỀ CÁC GIAO THỨC MÀ TÔI TỪNG THẤY
+- TCP
+- UDP
+- IP
+- ICMP
+- ARP
+- HTTP
+- HTTPS
+chi tiết hơn tôi sẽ tìm hiểu sau.
