@@ -1,0 +1,62 @@
+Day16: Mô hình TCP/IP 4 tầng
+
+
+1. MÔ HÌNH TCP/IP 4 TẦNG :Mô hình TCP/IP là mô hình mạng được sử dụng trên toàn bộ Internet hiện nay. Nó gồm 4 tầng, gọn nhẹ và thực tế hơn so với mô hình OSI 7 tầng lý thuyết.
+
+
+TẦNG 4: ỨNG DỤNG (APPLICATION LAYER)
+- Chức năng: Nơi các ứng dụng và người dùng tương tác với mạng.
+- Giao thức chính: HTTP, HTTPS, DNS, SSH, SMTP, FTP.
+- Trong Wireshark: Bạn sẽ thấy các giao thức này hiển thị trực tiếp (HTTP, TLS, DNS...).
+- Tấn công phổ biến: SQL Injection, XSS, Phishing, khai thác lỗ hổng ứng dụng web.
+
+TẦNG 3: VẬN CHUYỂN (TRANSPORT LAYER)
+- Chức năng: Vận chuyển dữ liệu giữa các ứng dụng trên hai máy tính khác nhau.
+- Giao thức chính: TCP (có bảo hiểm), UDP (nhanh, không bảo hiểm).
+- Trong Wireshark: Bạn sẽ thấy các giao thức TCP hoặc UDP.
+- Tấn công phổ biến: SYN Flood (DDoS), Port Scanning, Session Hijacking.
+
+TẦNG 2: INTERNET (INTERNET LAYER)
+- Chức năng: Định tuyến và đánh địa chỉ IP cho các gói tin.
+- Giao thức chính: IP (IPv4, IPv6), ICMP (dùng cho lệnh ping).
+- Trong Wireshark: Bạn sẽ thấy IP và ICMP.
+- Tấn công phổ biến: IP Spoofing, ICMP Flood, tấn công vào bảng định tuyến.
+
+TẦNG 1: TRUY CẬP MẠNG (NETWORK ACCESS LAYER)
+- Chức năng: Gửi và nhận dữ liệu qua mạng vật lý (cáp, WiFi).
+- Giao thức chính: Ethernet, ARP, WiFi.
+- Trong Wireshark: Bạn sẽ thấy Ethernet và ARP.
+- Tấn công phổ biến: ARP Spoofing, MAC Spoofing, nghe lén WiFi.
+
+
+2. TCP (Transmission control protocol) / UDP (User Datagram Protocol)
+
+2.1 TCP - "Giao thức có bảo hiểm"
+
+Nguyên lý hoạt động:
+   Bắt tay 3 bước (3-Way Handshake): Thiết lập kết nối trước khi gửi dữ liệu.
+   SYN (Client → Server): "Tôi muốn kết nối!"
+   SYN-ACK (Server → Client): "Tôi sẵn sàng!"
+   ACK (Client → Server): "OK, bắt đầu gửi dữ liệu!"
+
+Truyền dữ liệu: Dữ liệu được chia thành các đoạn (segment), đánh số thứ tự (Sequence Number - SEQ).
+Máy nhận gửi lại ACK để xác nhận đã nhận được từng đoạn.
+Nếu máy gửi không nhận được ACK sau một thời gian, nó sẽ gửi lại (Retransmission).
+Kết thúc kết nối (4-Way Handshake): Đóng kết nối sau khi truyền xong.
+
+FIN (Client → Server): "Tôi muốn kết thúc."
+ACK (Server → Client): "OK, tôi đã nhận."
+FIN (Server → Client): "Tôi cũng muốn kết thúc."
+ACK (Client → Server): "OK, đóng kết nối."
+
+Ví dụ thực tế: Truy cập trang web https://google.com. Trình duyệt của bạn sẽ dùng TCP để thiết lập kết nối an toàn trước khi tải nội dung trang web.
+
+
+2.2 UDP - "Giao thức không bảo hiểm"
+
+Nguyên lý hoạt động:
+   Không bắt tay: Không có bước thiết lập kết nối. Máy gửi gửi dữ liệu ngay lập tức.
+   Không xác nhận: Máy nhận không gửi lại ACK. Máy gửi không biết dữ liệu có đến nơi hay không.
+   Không sắp xếp thứ tự: Các gói tin có thể đến sai thứ tự, và ứng dụng phải tự sắp xếp lại (nếu cần).
+
+Ví dụ thực tế: Bạn đang gọi video qua Messenger. Dữ liệu âm thanh và hình ảnh được gửi qua UDP. Nếu một vài khung hình bị mất, cuộc gọi vẫn tiếp tục, nhưng chất lượng có thể giảm nhẹ (giật lag). Không ai muốn cuộc gọi bị "đứng hình" vì phải chờ TCP gửi lại dữ liệu mất! 
