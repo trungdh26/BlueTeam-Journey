@@ -1,0 +1,32 @@
+Day17-Subnetting, IP, ICMP
+
+1. Giao thức IP (Internet Protocol)
+   IP là giao thức chính ở Tầng Internet (tương đương Tầng 3 - Mạng trong mô hình OSI). Nó có nhiệm vụ định địa chỉ và định tuyến các gói tin từ máy gửi đến máy nhận.
+
+   Địa chỉ IP là một con số 32-bit (đối với IPv4) dùng để nhận dạng duy nhất một thiết bị trên mạng. Nó được chia thành 4 phần (octet), mỗi phần 8 bit, ví dụ: 192.168.1.45.
+	Header IP chứa các thông tin quan trọng:
+	Source IP: Địa chỉ IP của máy gửi.
+	Destination IP: Địa chỉ IP của máy nhận.
+	TTL (Time To Live): Số bước nhảy tối đa mà gói tin có thể đi qua trước khi bị hủy.
+	Protocol: Cho biết giao thức ở tầng trên (TCP hay UDP).
+
+   Nguyên lý hoạt động: IP hoạt động theo cơ chế "chuyển tiếp từng bước nhảy" (hop-by-hop). Mỗi router sẽ nhận gói tin, kiểm tra địa chỉ đích, và chuyển tiếp đến router tiếp theo cho đến khi gói tin đến được máy nhận.
+
+2. Subnetting (Chia mạng con)
+   Subnetting là kỹ thuật chia một mạng lớn thành các mạng con nhỏ hơn. Mục đích là để quản lý mạng hiệu quả hơn, giảm lưu lượng broadcast và tăng cường bảo mật.
+
+   Subnet Mask (Mặt nạ mạng con) là một số 32-bit dùng để xác định phần nào của địa chỉ IP là Network ID và phần nào là Host ID. Ví dụ: 255.255.255.0 (hay còn viết là /24) có nghĩa là 24 bit đầu là Network ID, 8 bit cuối là Host ID.
+	Network ID là địa chỉ xác định một mạng cụ thể. Ví dụ: 192.168.1.0/24.
+	Host ID là địa chỉ xác định một thiết bị cụ thể trong mạng đó. Ví dụ: 192.168.1.45 có Host ID là 45.
+
+   Vídụ: Một mạng 192.168.1.0/24 có thể chia thành 2 mạng con:
+	192.168.1.0/25 (từ .0 đến .127)
+	192.168.1.128/25 (từ .128 đến .255)
+
+3. Giao thức ICMP (Internet Control Message Protocol)
+   ICMP là giao thức phụ trợ của IP, dùng để báo lỗi và kiểm tra trạng thái mạng. Nó không vận chuyển dữ liệu ứng dụng như TCP hay UDP, mà chỉ là công cụ hỗ trợ để các thiết bị mạng giao tiếp với nhau về tình trạng mạng.
+   Các loại thông báo ICMP thường gặp:
+	Echo Request (Type 8) và Echo Reply (Type 0): Dùng trong lệnh ping để kiểm tra kết nối.
+	Destination Unreachable (Type 3): Thông báo không thể đến được máy đích.
+	Time Exceeded (Type 11): Thông báo gói tin đã vượt quá TTL (dùng trong traceroute).
+   Nguyên lý hoạt động: ICMP chỉ xuất hiện khi có sự kiện (ví dụ: lỗi hoặc khi người dùng chạy ping). Nó không tự động kiểm tra định kỳ.
