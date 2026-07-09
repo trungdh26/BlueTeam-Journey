@@ -1,0 +1,43 @@
+Day18: DNS, HTTP, HTTPS
+1. DNS (Domain Name System)
+Hệ thống chuyển đổi tên miền (ví dụ: google.com) thành địa chỉ IP (142.250.196.78).
+Các loại bản ghi DNS quan trọng:
+  A: Tên miền → IPv4
+  AAAA: Tên miền → IPv6
+  CNAME: Tên miền → Tên miền khác (alias)
+  MX: Mail Exchange - xác định máy chủ email
+  NS: Name Server - máy chủ tên
+  TXT: Lưu trữ văn bản tùy ý (SPF, DKIM...)
+Quy trình phân giải DNS: Local Cache → Hosts File → Recursive DNS (ISP) → Root Server → TLD Server → Authoritative Name Server → IP.
+
+2. HTTP (Hypertext Transfer Protocol)
+Giao thức web không mã hóa, dùng cổng 80. Dữ liệu truyền dạng văn bản thuần, dễ bị nghe lén.
+Phương thức HTTP: GET (lấy dữ liệu), POST (gửi dữ liệu), PUT (cập nhật), DELETE (xóa), OPTIONS (hỏi hỗ trợ).
+
+Các thành phần của Request:
+  Request Line: Method + URL + HTTP Version
+  Headers: Host, User-Agent, Accept, Cookie...
+  Body: Dữ liệu gửi kèm (nếu có)
+Các thành phần của Response:
+  Status Line: HTTP Version + Status Code + Status Message
+  Headers: Content-Type, Content-Length, Set-Cookie...
+  Body: Nội dung trang web (HTML, JSON...)
+
+3. HTTPS (HTTP Secure)
+Phiên bản bảo mật của HTTP, dùng SSL/TLS để mã hóa, cổng 443. Dữ liệu được mã hóa, bảo vệ khỏi nghe lén và tấn công Man-in-the-Middle (MITM).
+Chứng chỉ số (SSL/TLS Certificate): Xác thực danh tính của máy chủ.
+Quá trình bắt tay TLS (TLS Handshake): Client và Server thỏa thuận các tham số mã hóa trước khi truyền dữ liệu.
+
+4. Mã trạng thái HTTP quan trọng
+Nhóm	Mã	Ý nghĩa
+2xx (Thành công)	200	OK - Yêu cầu thành công.
+201	Created - Tài nguyên được tạo thành công.
+3xx (Chuyển hướng)	301	Moved Permanently - Tài nguyên đã chuyển vĩnh viễn.
+302	Found - Tài nguyên tạm thời chuyển hướng.
+4xx (Lỗi client)	400	Bad Request - Yêu cầu sai cú pháp.
+401	Unauthorized - Cần xác thực.
+403	Forbidden - Không có quyền truy cập.
+404	Not Found - Không tìm thấy tài nguyên.
+5xx (Lỗi server)	500	Internal Server Error - Lỗi máy chủ nội bộ.
+502	Bad Gateway - Cổng trung gian bị lỗi.
+503	Service Unavailable - Dịch vụ tạm thời quá tải hoặc đang bảo trì.
