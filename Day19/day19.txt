@@ -1,0 +1,53 @@
+Day19: LAN, ARP, DHCP
+1. LAN (Local Area Network) là gì?
+  LAN là mạng kết nối các thiết bị trong một phạm vi nhỏ (nhà, văn phòng, trường học).
+  Các thiết bị trong LAN có thể giao tiếp trực tiếp với nhau mà không cần qua Internet.
+  IP trong LAN: Sử dụng địa chỉ IP riêng (Private IP) như 192.168.x.x, 10.x.x.x, 172.16.x.x.
+
+2. Các thiết bị chính trong LAN
+  Switch: Kết nối các thiết bị trong cùng LAN, chỉ gửi dữ liệu đến đúng thiết bị nhận (dựa trên MAC).
+  Router: Kết nối LAN với Internet, định tuyến dữ liệu, thực hiện NAT, cấp IP qua DHCP.
+
+3. ARP (Address Resolution Protocol)
+  Mục đích: Dịch địa chỉ IP → địa chỉ MAC trong cùng mạng LAN.
+  Cách hoạt động:
+	Máy gửi gửi ARP Request (hỏi MAC của IP đích) đến toàn bộ mạng LAN.
+	Máy có IP đó trả lời bằng ARP Reply (gửi MAC của nó).
+	Máy gửi lưu cặp IP-MAC vào bộ nhớ đệm (ARP Cache).
+Lưu ý: ARP chỉ hoạt động trong cùng mạng LAN, không hoạt động qua Internet.
+
+4. DHCP (Dynamic Host Configuration Protocol)
+  Mục đích: Tự động cấp phát địa chỉ IP và các cài đặt mạng cho thiết bị khi tham gia mạng.
+
+  Quy trình DORA:
+	Bước	Tên gói tin	Ý nghĩa
+	1	DHCP Discover	Thiết bị tìm DHCP Server
+	2	DHCP Offer	DHCP Server đề xuất IP
+	3	DHCP Request	Thiết bị yêu cầu IP đó
+	4	DHCP ACK	DHCP Server xác nhận và gán IP
+
+Lợi ích: Tiết kiệm thời gian, tránh xung đột IP, quản lý tập trung.
+
+5. NAT (Network Address Translation)
+  Mục đích: Cho phép nhiều thiết bị trong LAN (Private IP) chia sẻ một địa chỉ IP công cộng duy nhất để ra Internet.
+
+  Cách hoạt động:
+	Thiết bị trong LAN gửi yêu cầu ra Internet (IP nguồn: Private IP).
+	Router NAT thay thế IP nguồn thành IP công cộng của Router.
+	Khi nhận phản hồi, Router NAT chuyển tiếp về đúng thiết bị ban đầu.
+	Lợi ích: Tiết kiệm địa chỉ IPv4, bảo vệ mạng nội bộ khỏi truy cập trực tiếp từ Internet.
+
+6. So sánh: Cùng mạng LAN và Khác mạng LAN 
+Tiêu chí    |   Cùng mạng LAN	                    |  Khác mạng LAN (Internet)
+----------------------------------------------------------------------------------
+Dùng ARP?   |   Có (tìm MAC của máy đích)           |  Có (tìm MAC của Router)
+Đường đi    |   Trực tiếp (Máy → Switch → Máy)	    |  Qua Router và Internet
+Có NAT?	    |   Không	                            |  Có
+IP sử dụng  |   Private IP (192.168.x.x, 10.x.x.x)  |  Public IP (115.x.x.x)
+----------------------------------------------------------------------------------
+
+7. Mối quan hệ "Cha - Con" trong mạng
+Cấp 1: IP Công cộng (115.x.x.x) của Router WiFi – "Cha" của cả nhà.
+Cấp 2: IP Private (192.168.x.x) của các thiết bị trong nhà – "Con" của Router.
+Cấp 3: IP Private (10.x.x.x) của máy ảo (NAT) – "Cháu" của Router, "Con" của máy thật.
+
