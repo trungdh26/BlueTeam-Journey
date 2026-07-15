@@ -1,0 +1,76 @@
+Day 21: Revise
+
+1. TỔNG QUAN
+- Đã hoàn thành các phòng học cơ bản trong lộ trình Pre-Security trên TryHackMe.
+- Các chủ đề đã học: Network Fundamentals, How The Web Works, Intro to LAN, Windows Fundamentals.
+- Xây dựng nền tảng về mạng máy tính, hệ điều hành Windows, và các giao thức cốt lõi trên Internet.
+
+2. MẠNG MÁY TÍNH (NETWORK FUNDAMENTALS)
+2.1. Mô hình OSI (7 tầng)
+- Lý thuyết: 7 tầng (Application, Presentation, Session, Transport, Network, Data Link, Physical).
+- Chức năng: Mô tả cách dữ liệu được đóng gói và truyền qua mạng.
+- Liên hệ thực tế: Hiểu được vị trí của các giao thức (HTTP ở Tầng 7, TCP ở Tầng 4).
+
+2.2. Mô hình TCP/IP (4 tầng - Thực tế)
+- 4 tầng: Application, Transport, Internet, Network Access.
+- So với OSI: Gọn nhẹ hơn, gộp các tầng không cần thiết.
+
+2.3. Các giao thức quan trọng
+----------------------------------------------------------------------------------------
+| Giao thức     | Tầng           | Chức năng                                           |
+|---------------|----------------|-----------------------------------------------------|
+| HTTP/HTTPS    | Ứng dụng       | Truyền tải nội dung web (80/443).                   |
+| DNS           | Ứng dụng       | Chuyển đổi tên miền thành IP (port 53).             |
+| SSH           | Ứng dụng       | Kết nối và điều khiển máy từ xa an toàn (port 22).  |
+| TCP           | Vận chuyển     | Vận chuyển dữ liệu đáng tin cậy (có bảo hiểm).      |
+| UDP           | Vận chuyển     | Vận chuyển dữ liệu nhanh, không đảm bảo.            |
+| IP            | Internet       | Định tuyến và địa chỉ (IPv4, IPv6).                 |
+| ICMP          | Internet       | Kiểm tra kết nối và báo lỗi (ping).                 |
+| ARP           | Network Access | Tìm địa chỉ MAC từ địa chỉ IP trong cùng mạng LAN.  |
+----------------------------------------------------------------------------------------
+
+
+3. CÁCH WEB HOẠT ĐỘNG (HOW THE WEB WORKS)
+
+3.1. DNS (Domain Name System)
+
+- Chức năng: Chuyển đổi tên miền (example.com) thành địa chỉ IP.
+- Quy trình phân giải: Browser Cache → Hosts File → Recursive DNS (ISP) → Root Server → TLD Server → Authoritative NS.
+
+3.2. HTTP/HTTPS
+
+- HTTP: Giao thức web không mã hóa (cổng 80). Dễ bị nghe lén.
+- HTTPS: Phiên bản bảo mật, sử dụng TLS/SSL để mã hóa dữ liệu (cổng 443).
+- Request-Response: Client gửi Request (GET, POST...), Server trả Response (200 OK, 404...).
+
+
+4.LAN 
+
+4.1. Thiết bị mạng
+|----------------------------------------------------------------------------------------------|
+| Thiết bị | Chức năng                                                                         |
+|----------|-----------------------------------------------------------------------------------|
+| Switch   | Kết nối các thiết bị trong cùng mạng LAN, chỉ gửi dữ liệu đến đúng thiết bị nhận. |
+| Router   | Kết nối LAN với Internet, thực hiện NAT, định tuyến.                              |
+|----------------------------------------------------------------------------------------------|
+
+4.2. Các giao thức trong LAN
+- ARP: Dịch IP → MAC trong cùng mạng LAN. Hoạt động qua ARP Request và ARP Reply.
+- DHCP: Tự động cấp phát IP cho thiết bị (Quy trình DORA: Discover, Offer, Request, ACK).
+- NAT: Chuyển đổi Private IP → Public IP để ra Internet. Nhiều thiết bị trong LAN chia sẻ 1 IP công cộng.
+
+
+5.WINDOWS (WINDOWS FUNDAMENTALS)
+
+5.1. Các phiên bản Windows
+- Windows Home: Thiếu các tính năng bảo mật nâng cao (RDP Server, BitLocker).
+- Windows Pro: Có các tính năng bảo mật dành cho doanh nghiệp.
+
+5.2. NTFS (New Technology File System)
+- Chức năng: Hệ thống file của Windows, hỗ trợ phân quyền chi tiết.
+- Các quyền cơ bản: Full Control, Modify, Read & Execute, Read, Write.
+
+5.3. UAC (User Account Control)
+- Chức năng: Cơ chế bảo mật yêu cầu xác nhận trước khi thực hiện thay đổi hệ thống.
+- Ý nghĩa: Ngăn chặn phần mềm độc hại tự động thực hiện các thay đổi trái phép.
+
