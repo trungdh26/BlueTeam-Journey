@@ -1,0 +1,25 @@
+Day 20: WINDOWS FUNDAMENTALS
+
+
+1. CÁC PHIÊN BẢN WINDOWS
+- Sự khác biệt giữa Home và Pro: BitLocker, Domain Join.
+- Liên hệ: Windows Home không hỗ trợ RDP (đã gặp ở bài lab trước).
+
+2. NTFS (HỆ THỐNG FILE)
+- Là hệ thống file chính của Windows.
+- Các quyền cơ bản: Full Control, Modify, Read, Write...
+- Phân quyền chi tiết hơn Linux (không chỉ rwx).
+
+3. UAC VÀ TÀI KHOẢN NGƯỜI DÙNG
+- UAC là cơ chế bảo mật yêu cầu xác nhận trước khi thay đổi hệ thống.
+- Nếu UAC bị tắt, đó là dấu hiệu đáng ngờ.
+- Tài khoản Administrator nên hạn chế sử dụng.
+
+4. THƯ MỤC SYSTEM32
+- Chứa các file hệ thống quan trọng.
+- Không xóa/sửa đổi nếu không biết rõ.
+
+5. KẾT NỐI VỚI EVENT VIEWER
+- Event ID 4656: Thay đổi quyền file.
+- Event ID 4648: UAC được kích hoạt.
+- Event ID 4720, 4732: Tạo user, thêm vào nhóm Admin.
