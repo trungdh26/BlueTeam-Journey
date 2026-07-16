@@ -1,0 +1,27 @@
+NGÀY 23 - LINUX FUNDAMENTALS (PHẦN 2)
+
+1. NỘI DUNG CHÍNH
+- File permissions (quyền file): read (r), write (w), execute (x).
+- Quản lý tiến trình (process management): ps, top, kill.
+- Lệnh chmod để thay đổi quyền và chủ sở hữu.
+
+2. KIẾN THỨC VỀ FILE PERMISSIONS
+- Quyền được chia thành 3 nhóm: owner, group, others.
+- Mỗi nhóm có 3 quyền: read (r=4), write (w=2), execute (x=1).
+
+- Ví dụ: chmod 755 file.sh → owner: rwx, group: r-x, others: r-x.
+
+3. QUẢN LÝ TIẾN TRÌNH
+--------------------------------------------------------|
+| Lệnh          | Công dụng                             |
+|---------------|---------------------------------------|
+| ps aux        | Xem tất cả tiến trình đang chạy       |
+| top           | Xem tiến trình theo thời gian thực    |
+| kill [PID]    | Kết thúc một tiến trình               |
+| kill -9 [PID] | Kết thúc tiến trình một cách cứng rắn |
+---------------------------------------------------------
+
+4. THỰC HÀNH
+- Đã thực hành thay đổi quyền file bằng chmod.
+- Đã dùng ps aux để xem các tiến trình đang chạy.
+- Đã dùng kill để kết thúc một tiến trình không cần thiết.
