@@ -1,0 +1,24 @@
+NGÀY 24 - HOÀN THÀNH PRE-SECURITY PATH
+
+1. GIỚI THIỆU
+- Tổng kết toàn bộ lộ trình Pre-Security trên TryHackMe.
+- Đã hoàn thành các module cơ bản: Introduction to Cyber Security, Network Fundamentals, How The Web Works, Linux Fundamentals, Windows Fundamentals.
+
+2. NHỮNG GÌ ĐÃ HỌC ĐƯỢC
+2.1. Mạng máy tính
+- Mô hình OSI (7 tầng) và TCP/IP (4 tầng).
+- Các giao thức quan trọng: TCP, UDP, IP, ICMP, ARP, DHCP, NAT.
+- Cách hoạt động của DNS, HTTP/HTTPS.
+
+2.2. Hệ điều hành
+- Linux: Các lệnh cơ bản, file permissions, process management.
+- Windows: Các phiên bản Windows, UAC, NTFS, Event Viewer.
+
+2.3. Công cụ
+- Wireshark: Bắt và phân tích gói tin.
+- SSH: Kết nối từ xa an toàn.
+
+3. KẾ HOẠCH TIẾP THEO
+- Bắt đầu lộ trình Cyber Security 101.
+- Tiếp tục thực hành với Wireshark và Linux logs.
+- Xây dựng các dự án nhỏ để áp dụng kiến thức.
