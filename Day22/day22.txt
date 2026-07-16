@@ -1,0 +1,12 @@
+DAY 22 - LINUX FUNDAMENTALS (PHẦN 1)
+
+1. NỘI DUNG CHÍNH
+- Ôn tập các lệnh Linux cơ bản đã học (ls, cd, pwd, mkdir, touch, cp, mv, rm, cat, grep, tail, head).
+- Bổ sung các lệnh mới: echo, man, which, sudo, su.
+- Làm quen với hệ thống file Linux và thư mục gốc (/).
+
+2. THỰC HÀNH
+- Đã thực hành các lệnh cơ bản trên máy ảo Ubuntu.
+- Đã sử dụng man để tìm hiểu thêm về các lệnh chưa rõ.
+- Đã hiểu cấu trúc thư mục Linux: /bin, /etc, /home, /var, /tmp.
+
