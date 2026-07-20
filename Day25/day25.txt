@@ -1,0 +1,77 @@
+Day25: Window advanced
+
+1. HỆ THỐNG TỆP (FILE SYSTEM)
+- File system là hệ thống quản lý cách dữ liệu được tổ chức,
+  lưu trữ và phân quyền truy cập trên ổ cứng.
+
+- Các loại file system:
+  + FAT16/FAT32: File Allocation Table, dùng cho USB/Thẻ nhớ,
+    không hỗ trợ phân quyền, không hỗ trợ file > 4GB
+  + NTFS: New Technology File System, dùng cho Windows hiện đại,
+    hỗ trợ phân quyền, journaling, mã hóa, nén, ADS
+
+- NTFS là journaling file system: tự động sửa lỗi khi gặp sự cố
+  bằng cách sử dụng log file.
+
+
+2. NTFS PERMISSIONS (PHÂN QUYỀN NTFS)
+Các quyền cơ bản:
+- Full control: Toàn quyền kiểm soát
+- Modify: Sửa đổi
+- Read & Execute: Đọc và thực thi
+- List folder contents: Liệt kê nội dung thư mục
+- Read: Đọc
+- Write: Ghi
+
+Cách xem: Right-click file/folder -> Properties -> Security tab
+
+
+3. ADS - ALTERNATE DATA STREAMS
+- Là tính năng đặc trưng của NTFS, cho phép một file chứa nhiều
+  luồng dữ liệu ẩn bên cạnh luồng dữ liệu chính.
+
+- Windows Explorer KHÔNG hiển thị ADS (được thiết kế để ẩn).
+
+- Ứng dụng hợp pháp:
+  + Zone.Identifier: đánh dấu file tải từ Internet (ZoneId=3)
+  + Lưu thumbnail, metadata của file
+
+- Ứng dụng độc hại: giấu mã độc, dữ liệu bí mật
+
+- Cách xem ADS: dùng CMD (dir /r) hoặc PowerShell
+
+- ADS CHỈ HOẠT ĐỘNG TRÊN NTFS, không có trên FAT32 hay Linux/macOS
+
+
+5. CÁCH DEFENDER PHÁT HIỆN MÃ ĐỘC TRONG ADS
+- Quét tự động toàn bộ hệ thống, bao gồm cả luồng ADS
+- So sánh với cơ sở dữ liệu chữ ký virus
+- Giám sát hành vi bất thường (Behavioral Monitoring)
+- Sử dụng trí tuệ đám mây (Cloud-based detection)
+
+
+6. THƯ MỤC WINDOWS VÀ SYSTEM32
+- Thư mục Windows (C:\Windows) chứa hệ điều hành
+- Biến môi trường: %windir%
+- System32 là thư mục chứa các file quan trọng, cần thiết cho OS
+- RẤT CẨN THẬN: xóa file trong System32 có thể làm hỏng Windows
+
+
+7. TÀI KHOẢN NGƯỜI DÙNG WINDOWS
+- Hai loại: Administrator (Quản trị viên) và Standard User (Người dùng)
+- Administrator: có thể thêm/xóa user, cài phần mềm, thay đổi cài đặt
+- Standard User: chỉ thay đổi được file/thư mục của mình
+
+
+8. QUẢN LÝ NGƯỜI DÙNG VÀ NHÓM (lusrmgr.msc)
+- Cách mở: Win + R -> gõ lusrmgr.msc
+- Users: danh sách tài khoản người dùng
+- Groups: danh sách nhóm (mỗi nhóm có quyền riêng)
+- User được gán vào nhóm sẽ kế thừa quyền của nhóm đó
+
+
+9. THƯ MỤC C:\USERS VÀ USER PROFILE
+- Mỗi user có profile riêng: C:\Users\TênUser
+- Các thư mục mặc định: Desktop, Documents, Downloads, Music, Pictures
+- Profile được tạo khi đăng nhập lần đầu (User Profile Service)
+
