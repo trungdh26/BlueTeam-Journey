@@ -1,0 +1,34 @@
+Day26: Windows Advanced 2
+
+1. USER PROFILE (HỒ SƠ NGƯỜI DÙNG)
+- Vị trí lưu trữ: C:\Users\TênNgườiDùng
+- Thời điểm tạo: Lần đầu đăng nhập (không phải khi tạo tài khoản)
+- Dịch vụ tạo: User Profile Service
+- Thư mục mặc định: Desktop, Documents, Downloads, Music, Pictures
+
+
+2. LOCAL USERS AND GROUPS (lusrmgr.msc)
+- Cách mở: Windows + R -> gõ "lusrmgr.msc" -> Enter
+- Gồm 2 thư mục: Users và Groups
+- Users: danh sách tài khoản người dùng
+- Groups: danh sách nhóm, mỗi nhóm có quyền riêng
+- Người dùng được thêm vào nhóm sẽ kế thừa quyền của nhóm đó
+- 1 người dùng có thể thuộc nhiều nhóm
+- Tài khoản đặc biệt: Administrator (quản trị), Guest (khách)
+
+
+3. USER ACCOUNT CONTROL (UAC)
+- Là cơ chế bảo mật của Microsoft (từ Windows Vista)
+- Mục đích: bảo vệ hệ thống khỏi malware
+- Khi đăng nhập bằng Administrator, phiên làm việc KHÔNG chạy với quyền cao
+- Khi cần quyền cao, UAC hiện cửa sổ xác nhận (yêu cầu nhập mật khẩu hoặc bấm Yes)
+- Dấu hiệu nhận biết: biểu tượng hình khiên (shield) trên chương trình
+- Nếu không xác nhận -> chương trình không được chạy/cài đặt
+- Ngoại lệ: UAC không áp dụng cho tài khoản Built-in Administrator
+
+
+4. PHÍM TẮT QUAN TRỌNG
+- Ctrl + Shift + Esc: Mở Task Manager
+- Windows + R: Mở Run Dialog
+- Windows: Mở Start Menu
+
