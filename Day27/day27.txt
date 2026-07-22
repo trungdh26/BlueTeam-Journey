@@ -1,0 +1,225 @@
+Day27: Window Advanced 3
+
+MỤC LỤC:
+1. System Configuration (MSConfig)
+2. Advanced System Settings
+3. Computer Management (compmgmt.msc)
+4. System Information (msinfo32)
+5. Resource Monitor (resmon)
+6. Command Prompt (cmd)
+7. Windows Registry (regedit)
+8. User Account Control (UAC) Settings
+
+
+1. SYSTEM CONFIGURATION (MSConfig)
+- Mục đích: Chẩn đoán và sửa lỗi khởi động Windows (Advanced troubleshooting)
+- Cách mở: Windows + R -> gõ "msconfig" -> Enter
+- Yêu cầu: Cần quyền Administrator
+
+CÁC TAB CHÍNH:
++ General: Chọn chế độ khởi động (Normal, Diagnostic, Selective)
++ Boot: Cấu hình tùy chọn khởi động (Safe boot, No GUI boot, Timeout...)
++ Services: Xem và bật/tắt các dịch vụ nền (background services)
++ Startup: KHÔNG dùng để quản lý startup, Microsoft khuyên dùng Task Manager
++ Tools: Danh sách các công cụ hệ thống kèm đường dẫn, có thể Launch trực tiếp
+
+2. ADVANCED SYSTEM SETTINGS
+- Cách mở: Tìm kiếm "View advanced system settings" trong Start Menu
+- Mục đích: Cấu hình hiệu suất, bộ nhớ ảo và xử lý lỗi hệ thống
+
+A. PERFORMANCE SETTINGS:
++ Visual Effects: Bật/tắt hiệu ứng hình ảnh để tăng tốc hệ thống
++ Processor Scheduling: Ưu tiên chương trình đang chạy (Programs) hay dịch vụ nền
++ Virtual Memory (Page File): Cấu hình bộ nhớ ảo khi RAM đầy
+  - Xem được: ổ đĩa lưu, kích thước ban đầu, kích thước tối đa
+  - Windows có tự quản lý hay không
+
+B. STARTUP AND RECOVERY:
++ Default operating system: Chọn OS mặc định nếu có nhiều OS
++ Time to display list: Thời gian hiển thị danh sách OS khi boot
++ Write debugging information: Chọn loại Crash Dump khi bị BSOD
+  - Automatic memory dump (tự động)
+  - Kernel memory dump (chỉ lấy phần nhân)
+  - Small memory dump (256 KB)
+  - Complete memory dump (lưu toàn bộ RAM)
+  - None (không lưu)
++ Dump file path: Đường dẫn lưu file crash dump (mặc định: %SystemRoot%\MEMORY.DMP)
+
+C. USER PROFILES:
++ Manage user profiles: Xem và xóa profile người dùng đã từng đăng nhập
+
+
+3. COMPUTER MANAGEMENT (compmgmt.msc)
+- Cách mở: Windows + R -> gõ "compmgmt.msc" -> Enter
+
+A. SYSTEM TOOLS:
++ Task Scheduler:
+  - Tạo và quản lý tác vụ tự động chạy theo lịch
+  - Có thể chạy ứng dụng, script khi đăng nhập/đăng xuất
+  - Xem tác vụ tại Task Scheduler Library
+
++ Event Viewer:
+  - Xem các sự kiện đã xảy ra trên máy tính
+  - Dùng để chẩn đoán sự cố và điều tra hành động
+  - 5 loại sự kiện: Information, Warning, Error, Critical, Verbose
+  - Windows Logs: Application, Security, Setup, System, Forwarded Events
+
++ Shared Folders:
+  - Xem danh sách thư mục được chia sẻ
+  - Xem Permissions (ai có quyền truy cập)
+  - Xem Sessions (người dùng đang kết nối)
+  - Xem Open Files (file đang được mở)
+
++ Local Users and Groups: (đã học ở Windows Fundamentals 1)
+
++ Performance Monitor (perfmon):
+  - Xem dữ liệu hiệu suất theo thời gian thực hoặc từ log
+  - Hữu ích để gỡ rối sự cố hiệu suất
+
++ Device Manager:
+  - Xem và cấu hình phần cứng
+  - Vô hiệu hóa/kích hoạt thiết bị
+
+B. STORAGE:
++ Disk Management:
+  - Thiết lập ổ đĩa mới
+  - Mở rộng/Thu nhỏ phân vùng
+  - Gán hoặc thay đổi ký tự ổ đĩa (ex: E:)
+
+C. SERVICES AND APPLICATIONS:
++ Services:
+  - Dịch vụ là ứng dụng chạy ngầm trong nền
+  - Startup type: Automatic, Manual, Disabled
+  - Xem Display Name, Status, Path to executable
+
++ WMI Control:
+  - Cấu hình Windows Management Instrumentation (WMI)
+  - WMIC đã bị deprecated, thay thế bằng PowerShell
+
+
+4. SYSTEM INFORMATION (msinfo32)
+- Cách mở: Windows + R -> gõ "msinfo32" -> Enter
+- Mục đích: Xem thông tin tổng quan về phần cứng, phần mềm hệ thống
+
+A. SYSTEM SUMMARY:
+  - Thông tin tổng quan: CPU, RAM, OS, tên máy tính, BIOS, v.v.
+
+B. HARDWARE RESOURCES:
+  - Thông tin kỹ thuật nâng cao: IRQ, I/O Ports, DMA, Memory Addresses
+  - KHÔNG dành cho người dùng phổ thông
+
+C. COMPONENTS:
+  - Thông tin chi tiết về phần cứng:
+    - Display (card đồ họa)
+    - Input (bàn phím, chuột)
+    - Storage (ổ cứng)
+    - Network (card mạng)
+
+D. SOFTWARE ENVIRONMENT:
+  - Thông tin về phần mềm, biến môi trường, kết nối mạng
+  - Environment Variables (Biến môi trường):
+    - Lưu thông tin về đường dẫn hệ điều hành, số CPU, thư mục temp
+    - Ví dụ: WINDIR = C:\Windows
+
+- TÍNH NĂNG TÌM KIẾM: Có thanh tìm kiếm ở cuối để tìm thông tin nhanh
+
+
+5. RESOURCE MONITOR (resmon)
+- Cách mở: Windows + R -> gõ "resmon" -> Enter
+- Mục đích: Giám sát chi tiết CPU, Memory, Disk, Network
+
+A. CÁC TAB CHÍNH:
++ Overview (Tổng quan): Hiển thị 4 phần CPU, Disk, Network, Memory
++ CPU: % CPU, Threads, Handles, liên kết dịch vụ
++ Memory: RAM đang dùng, Commit, Working Set của từng tiến trình
++ Disk: Tốc độ đọc/ghi, chi tiết file nào đang bị truy cập
++ Network: Tốc độ gửi/nhận, kết nối TCP, ports đang mở
+
+B. TÍNH NĂNG ĐẶC BIỆT:
++ Bộ lọc nâng cao
++ Phân tích deadlock và xung đột khóa tệp
++ Đóng ứng dụng không phản hồi
++ Biểu đồ thời gian thực
+
+C. SO SÁNH VỚI TASK MANAGER:
++ Task Manager: Dùng cho người dùng phổ thông, thông tin cơ bản
++ Resource Monitor: Dùng cho quản trị viên, thông tin chi tiết hơn
+
+6. COMMAND PROMPT (cmd)
+- Cách mở: Windows + R -> gõ "cmd" -> Enter
+
+A. LỆNH CƠ BẢN:
++ hostname       -> Xem tên máy tính
++ whoami         -> Xem tên người dùng đang đăng nhập
++ cls            -> Xóa màn hình CMD
+
+B. LỆNH GỠ RỐI (TROUBLESHOOTING):
++ ipconfig       -> Xem cấu hình mạng (IP, Subnet, Gateway)
++ ipconfig /all  -> Xem chi tiết cấu hình mạng (MAC, DHCP, DNS, Lease...)
++ netstat        -> Xem thống kê giao thức và kết nối TCP/IP
++ net            -> Quản lý tài nguyên mạng (hỗ trợ sub-commands)
+
+C. CÁCH XEM TRỢ GIÚP:
++ Hầu hết lệnh: <command> /?
+  Ví dụ: ipconfig /?
++ Lệnh net: net help <sub-command>
+  Ví dụ: net help user, net help localgroup, net help share, net help use
+
+7. WINDOWS REGISTRY (regedit)
+- Cách mở: Windows + R -> gõ "regedit" -> Enter
+- Mục đích: Lưu cấu hình cho hệ thống, người dùng, ứng dụng, phần cứng
+
+A. CÁC HIVES CHÍNH:
++ HKEY_CLASSES_ROOT (HKCR)    -> Liên kết file (file associations)
++ HKEY_CURRENT_USER (HKCU)    -> Cài đặt của người dùng hiện tại
++ HKEY_LOCAL_MACHINE (HKLM)   -> Cài đặt toàn hệ thống
++ HKEY_USERS (HKU)            -> Hồ sơ của tất cả người dùng
++ HKEY_CURRENT_CONFIG (HKCC)  -> Cấu hình phần cứng hiện tại
+
+B. CẢNH BÁO:
+- Chỉ dành cho người dùng nâng cao
+- Thay đổi sai có thể làm hệ thống không khởi động được
+- Nên sao lưu (Export) trước khi sửa
+
+8. USER ACCOUNT CONTROL (UAC) SETTINGS
+- Cách mở: Windows + R -> gõ "UserAccountControlSettings.exe" -> Enter
+
+BỐN MỨC BẢO MẬT:
++ Mức 1 - Always notify:
+  - Cao nhất. Thông báo mọi thay đổi, màn hình bị dim (Secure Desktop)
+
++ Mức 2 - Notify for apps (Mặc định):
+  - Chỉ thông báo khi ứng dụng thay đổi
+  - KHÔNG thông báo khi bạn thay đổi cài đặt Windows
+  - Màn hình bị dim -> Bảo mật cao
+
++ Mức 3 - Notify without dimming:
+  - Giống mức 2 nhưng màn hình KHÔNG bị dim
+  - Kém an toàn hơn một chút (dễ bị tấn công click-through)
+
++ Mức 4 - Never notify:
+  - Tắt UAC hoàn toàn. KHÔNG có cảnh báo nào.
+  - RẤT NGUY HIỂM, không khuyến nghị
+
+9. TỔNG KẾT CÁC LỆNH MỞ CÔNG CỤ
+STT | Công cụ                        | Lệnh mở
+----|--------------------------------|-------------------------------
+1   | System Configuration           | msconfig
+2   | Computer Management            | compmgmt.msc
+3   | System Information             | msinfo32
+4   | Resource Monitor               | resmon
+5   | Registry Editor                | regedit
+6   | UAC Settings                   | UserAccountControlSettings.exe
+7   | Command Prompt                 | cmd
+8   | Task Manager                   | taskmgr
+9   | Performance Monitor            | perfmon
+10  | Disk Management                | diskmgmt.msc
+11  | Services                       | services.msc
+12  | Event Viewer                   | eventvwr.msc
+13  | Local Users and Groups         | lusrmgr.msc
+14  | Device Manager                 | devmgmt.msc
+
++ Windows + R     -> Mở Run Dialog
++ Windows         -> Mở Start Menu
++ Ctrl + Shift + Esc -> Mở Task Manager
++ Alt + F4        -> Đóng cửa sổ hiện tại
