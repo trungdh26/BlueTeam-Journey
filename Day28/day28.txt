@@ -1,0 +1,145 @@
+Day28: Command Line
+
+
+I. CÁC LỆNH HỆ THỐNG
+1. systeminfo
+   - Công dụng: Xem thông tin chi tiết về hệ thống (hostname, OS, build, v.v.)
+
+2. driverquery
+   - Công dụng: Hiển thị danh sách các driver đã cài đặt
+   - Kết hợp: driverquery | more (xem từng trang)
+
+3. help
+   - Công dụng: Hiển thị trợ giúp cho lệnh cụ thể
+
+4. cls
+   - Công dụng: Xóa màn hình Command Prompt
+
+
+II. CÁC LỆNH MẠNG (NETWORKING)
+
+1. ipconfig
+   - Công dụng: Xem cấu hình mạng cơ bản
+   - Kết quả hiển thị: IPv4 Address, Subnet Mask, Default Gateway
+   - ipconfig /all: Xem chi tiết (DNS, DHCP, MAC address, Lease time)
+
+2. ping
+   - Công dụng: Kiểm tra kết nối tới máy chủ
+   - Cú pháp: ping target_name
+   - Nguyên lý: Gửi gói ICMP và chờ phản hồi
+   - Ví dụ: ping example.com
+
+3. tracert
+   - Công dụng: Theo dõi đường đi của gói tin đến đích
+   - Cú pháp: tracert target_name
+   - Nguyên lý: Sử dụng TTL (Time-To-Live) để xác định đường đi
+
+4. nslookup
+   - Công dụng: Tra cứu địa chỉ IP của tên miền
+   - Cú pháp: nslookup domain_name
+   - Cú pháp với DNS cụ thể: nslookup domain_name 1.1.1.1
+
+5. netstat
+   - Công dụng: Hiển thị kết nối mạng và cổng đang lắng nghe
+   - netstat: Hiển thị kết nối đã thiết lập
+   - netstat -abon: Chi tiết với PID và chương trình liên quan
+     * -a: Tất cả kết nối và cổng
+     * -b: Hiển thị chương trình liên quan
+     * -o: Hiển thị Process ID (PID)
+     * -n: Hiển thị dạng số
+
+
+III. CÁC LỆNH QUẢN LÝ FILE VÀ THƯ MỤC
+1. cd
+   - cd: Hiển thị thư mục hiện tại
+   - cd ..: Lên một cấp thư mục
+   - cd tên_thư_mục: Di chuyển vào thư mục đó
+
+2. dir
+   - dir: Hiển thị nội dung thư mục hiện tại
+   - dir /a: Bao gồm file ẩn và file hệ thống
+   - dir /s: Bao gồm cả thư mục con
+
+3. tree
+   - Công dụng: Hiển thị cấu trúc cây thư mục
+
+4. mkdir
+   - Công dụng: Tạo thư mục mới (make directory)
+
+5. rmdir
+   - Công dụng: Xóa thư mục (remove directory)
+
+6. type
+   - Công dụng: Xem nội dung file văn bản (file ngắn)
+
+7. more
+   - Công dụng: Xem nội dung file từng trang
+   - Spacebar: Sang trang tiếp theo
+   - Enter: Xuống 1 dòng
+   - Q: Thoát
+
+8. copy
+   - Công dụng: Sao chép file
+   - Cú pháp: copy nguồn đích
+
+9. move
+   - Công dụng: Di chuyển file
+   - Cú pháp: move nguồn đích
+
+10. del / erase
+    - Công dụng: Xóa file
+    - Cú pháp: del tên_file
+
+11. Wildcard *
+    - Công dụng: Tham chiếu nhiều file
+    - Ví dụ: copy *.md C:\Markdown
+
+
+IV. CÁC LỆNH QUẢN LÝ TIẾN TRÌNH (PROCESS)
+1. tasklist
+   - Công dụng: Xem danh sách tiến trình đang chạy
+   - Lọc: tasklist /FI "imagename eq tên.exe"
+   - Ví dụ: tasklist /FI "imagename eq sshd.exe"
+
+2. taskkill
+   - Công dụng: Kết thúc tiến trình
+   - taskkill /PID số: Kết thúc theo PID
+   - taskkill /IM tên.exe: Kết thúc theo tên
+   - taskkill /F /PID số: Kết thúc bắt buộc (Force)
+   - taskkill /T /PID số: Kết thúc cả tiến trình con
+
+
+V. CÁC LỆNH TẮT MÁY (SHUTDOWN)
+1. shutdown /s
+   - Công dụng: Tắt máy (Shut down)
+
+2. shutdown /r
+   - Công dụng: Khởi động lại (Restart)
+
+3. shutdown /a
+   - Công dụng: Hủy lịch tắt máy đã lên lịch (Abort)
+
+4. shutdown /t [số_giây]
+   - Công dụng: Hẹn giờ tắt máy
+   - Ví dụ: shutdown /s /t 60 (tắt sau 60 giây)
+
+
+VI. CÁC LỆNH KHAC
+1. chkdsk
+   - Công dụng: Kiểm tra ổ đĩa tìm lỗi và bad sector
+
+2. sfc /scannow
+   - Công dụng: Quét và sửa lỗi file hệ thống
+
+
+VII. THỦ THUẬT QUAN TRỌNG
+1. Hiển thị trợ giúp: lệnh /?
+   - Ví dụ: ipconfig /?, netstat /?, tasklist /?
+
+2. Pipe với more: lệnh | more
+   - Ví dụ: driverquery | more, dir | more, tasklist | more
+
+3. Lệnh more dùng để:
+   - Xem file dài: more file.txt
+   - Pipe output dài: some_command | more
+
