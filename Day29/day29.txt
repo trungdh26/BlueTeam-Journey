@@ -1,0 +1,91 @@
+Day29: Networking concepts
+
+I. GIỚI THIỆU CHUNG
+1. Mô hình OSI (Tổng quan 7 tầng)
+2. Địa chỉ IP, Subnet, Private IP
+3. Giao thức TCP và UDP
+4. Telnet và cách dùng thực tế
+5. Encapsulation (Đóng gói dữ liệu)
+
+
+
+II. MÔ HÌNH OSI (7 TẦNG)
+
+Tầng 7 - Application (Ứng dụng)  : Giao tiếp trực tiếp với ứng dụng người dùng.
+                                   Ví dụ: HTTP, FTP, DNS, SMTP.
+Tầng 6 - Presentation (Trình diễn): Mã hóa, nén, chuyển đổi dữ liệu.
+                                   Ví dụ: SSL/TLS, JPEG, MPEG.
+Tầng 5 - Session (Phiên)          : Quản lý, thiết lập và duy trì phiên kết nối.
+                                   Ví dụ: NetBIOS, RPC.
+Tầng 4 - Transport (Giao vận)     : Truyền dữ liệu đầu cuối, đảm bảo tin cậy.
+                                   Ví dụ: TCP, UDP.
+Tầng 3 - Network (Mạng)           : Định tuyến, xác định đường đi cho gói tin.
+                                   Ví dụ: IP, ICMP, IPSec.
+Tầng 2 - Data Link (Liên kết DL)  : Truyền dữ liệu giữa các nút trong cùng mạng.
+                                   Ví dụ: Ethernet, WiFi (MAC addresses).
+Tầng 1 - Physical (Vật lý)        : Truyền tín hiệu điện, quang, vô tuyến.
+                                   Ví dụ: Cáp đồng, cáp quang, sóng WiFi.
+
+
+
+III. ĐỊA CHỈ IP & MẠNG CON
+- IPv4: 32-bit, gồm 4 octet (ví dụ: 192.168.66.89).
+- Dải Private IP (RFC 1918):
+    + 10.0.0.0 - 10.255.255.255   (10/8)
+    + 172.16.0.0 - 172.31.255.255 (172.16/12)
+    + 192.168.0.0 - 192.168.255.255 (192.168/16)
+- Lưu ý: Không thể truy cập Private IP từ bên ngoài Internet.
+
+
+IV. GIAO THỨC TCP & UDP
+1. UDP (User Datagram Protocol):
+   - Không kết nối (connectionless).
+   - Không đảm bảo gói tin đến đích.
+   - Nhanh hơn TCP.
+   - Ví dụ: Streaming video, DNS, VoIP.
+
+2. TCP (Transmission Control Protocol):
+   - Có kết nối (connection-oriented).
+   - Đảm bảo dữ liệu đến đích an toàn, đúng thứ tự.
+   - Chậm hơn UDP.
+   - 3 bước bắt tay (3-way handshake): SYN → SYN-ACK → ACK.
+   - Ví dụ: HTTP, HTTPS, SSH, FTP.
+
+3. Cổng (Port):
+   - Mỗi dịch vụ lắng nghe trên một cổng.
+   - Dải port: 1 - 65535 (2 octet). Port 0 bị dành riêng.
+   - Cổng phổ biến: 80 (HTTP), 443 (HTTPS), 22 (SSH), 53 (DNS), 25 (SMTP).
+
+
+V. TELNET - CÔNG CỤ KẾT NỐI TỪ XA
+- Telnet là giao thức cho phép kết nối đến máy chủ qua dòng lệnh (TCP).
+- Dùng để kiểm tra kết nối, gửi request thủ công đến các dịch vụ.
+- Không mã hóa → không bảo mật → ngày nay thường được thay thế bằng SSH.
+
+Cách dùng cơ bản:
+    telnet <IP> <PORT>
+
+Ví dụ trong lab TryHackMe:
+    telnet 10.49.154.246 7      # Echo server (trả lại những gì bạn gửi)
+    telnet 10.49.154.246 13     # Daytime server (trả về ngày giờ)
+    telnet 10.49.154.246 80     # Web server (cổng HTTP)
+
+Gửi yêu cầu HTTP thủ công:
+    GET / HTTP/1.1
+    Host: telnet.thm
+    <Enter lần 1>
+    <Enter lần 2>   # Dòng trống để hoàn tất request.
+
+Thoát khỏi telnet:
+    Ctrl + ]  →  sau đó gõ "quit" và Enter.
+
+
+VI. ENCAPSULATION (ĐÓNG GÓI DỮ LIỆU)
+Quá trình thêm header/trailer vào dữ liệu khi đi từ tầng trên xuống tầng dưới:
+
+    [Dữ liệu ứng dụng]
+        → thêm TCP/UDP header → [Segment/Datagram]
+            → thêm IP header → [Packet]
+                → thêm Ethernet/WiFi header + trailer → [Frame]
+
+Khi đến máy nhận, quá trình ngược lại (giải đóng gói) sẽ diễn ra.
