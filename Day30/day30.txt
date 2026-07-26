@@ -1,0 +1,112 @@
+Day30: Nmap
+
+I. Nmap LÀ GÌ?
+- Nmap (Network Mapper) là công cụ dòng lệnh dùng để quét và khám phá mạng.
+- Chức năng chính:
+    1. Phát hiện thiết bị đang hoạt động (Host discovery).
+    2. Quét các cổng mở (Port scanning).
+    3. Xác định dịch vụ đang chạy (Service/Version detection).
+    4. Dự đoán hệ điều hành (OS detection).
+
+
+II. CÁC LỆNH Nmap CƠ BẢN
+1. Phát hiện thiết bị (Ping Scan):
+   nmap -sn <IP/dải mạng>
+   Ví dụ: nmap -sn 192.168.1.0/24
+   Mục đích: Tìm tất cả thiết bị đang bật trong mạng (không quét cổng).
+
+2. Quét cổng cơ bản:
+   nmap <IP>
+   Ví dụ: nmap 192.168.1.49
+   Mục đích: Quét 1000 cổng TCP phổ biến nhất trên một thiết bị.
+
+3. Quét cổng và phát hiện dịch vụ:
+   nmap -sV <IP>
+   Mục đích: Xác định phiên bản phần mềm/dịch vụ đang chạy trên cổng mở.
+
+4. Quét toàn diện (Aggressive Scan):
+   nmap -A <IP>
+   Mục đích: Kết hợp nhiều kỹ thuật (OS detection, version, script).
+
+
+III. ĐỌC KẾT QUẢ QUÉT Nmap
+Kết quả mẫu từ lệnh nmap -sn:
+    Nmap scan report for TrungDH.fpt (192.168.1.45)
+    Host is up (0.0075s latency).
+
+-> Ý nghĩa:
+    - Tên thiết bị (hostname): TrungDH.fpt
+    - Địa chỉ IP: 192.168.1.45
+    - Trạng thái: Đang bật (Host is up).
+    - Thời gian phản hồi (latency): 0.0075 giây (kết nối rất nhanh).
+
+Kết quả mẫu từ lệnh nmap <IP>:
+    PORT      STATE SERVICE
+    62078/tcp open  iphone-sync
+
+-> Ý nghĩa:
+    - PORT: Cổng 62078 (TCP).
+    - STATE: open (đang mở và chấp nhận kết nối).
+    - SERVICE: iphone-sync (Nmap đoán dịch vụ là đồng bộ iPhone).
+    - Các cổng khác không hiển thị thường ở trạng thái closed (đóng) hoặc filtered (bị lọc).
+
+
+IV. CÁC THUẬT NGỮ VÀ TRẠNG THÁI CỔNG
+
+1. open:
+   - Cổng đang mở và có dịch vụ lắng nghe.
+   - Ví dụ: Cổng 80 (HTTP) trên máy chủ web.
+
+2. closed:
+   - Cổng không có dịch vụ nào lắng nghe.
+   - Máy đích phản hồi "từ chối kết nối" (connection refused).
+
+3. filtered:
+   - Nmap không nhận được phản hồi, thường do tường lửa chặn.
+   - Không biết cổng mở hay đóng.
+
+
+V. PHÁT HIỆN VÀ NHẬN DIỆN THIẾT BỊ TRONG MẠNG
+Các thiết bị trong mạng có thể được nhận diện qua:
+1. Hostname: Tên thiết bị xuất hiện trong kết quả.
+   - Ví dụ: H6c_BF4622805_EZVIZ.fpt → Camera EZVIZ.
+
+2. Cổng mở đặc trưng:
+   - Cổng 62078 (iphone-sync) → iPhone/iPad.
+   - Cổng 5555 (ADB) → Thiết bị Android (debug).
+   - Cổng 80/443 (HTTP/HTTPS) → Web server (camera, router...).
+   - Cổng 22 (SSH) → Máy Linux/Unix.
+
+
+VI. TƯỜNG LỬA (FIREWALL) VÀ Nmap
+1. Trên window mặc định bật sẵn tưởng lửa (chặn icmp)-> để quét đc window cần tắt tưởng lửa:
+   - Chặn ping (ICMP) → Nmap -sn có thể không thấy thiết bị.
+   - Chặn các cổng → Nmap hiển thị trạng thái "filtered".
+   - Máy tính Windows/Linux thường bật tường lửa mặc định.
+
+2. Khi tường lửa TẮT:
+   - Thiết bị trả lời ping → Nmap -sn thấy ngay.
+   - Nmap quét được cổng thực tế (chính xác hơn).
+   - Điện thoại, camera thường không có tường lửa hoặc tường lửa yếu.
+
+3. Vượt qua tường lửa:
+   - nmap -Pn <IP>: Bỏ qua bước ping, coi host luôn "up".
+   - nmap -sS <IP>: SYN scan (stealth), có thể vượt qua một số tường lửa.
+
+
+VII. CÁC LỆNH MỞ RỘNG HỮU ÍCH
+- Quét tất cả cổng (1-65535):
+    nmap -p- <IP>
+
+- Quét các cổng cụ thể:
+    nmap -p 22,80,443 <IP>
+
+- Quét UDP:
+    sudo nmap -sU <IP>
+
+- Quét có script cơ bản:
+    nmap -sC <IP>
+
+- Phát hiện hệ điều hành:
+    sudo nmap -O <IP>
+
