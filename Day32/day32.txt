@@ -1,0 +1,59 @@
+Day32: Firewall
+
+I. TƯỜNG LỬA LÀ GÌ?
+- Là "Người gác cổng" hoặc "Bảo vệ" của mạng máy tính.
+- Nhiệm vụ: Kiểm soát luồng dữ liệu ra/vào mạng nội bộ dựa trên các bộ luật
+  (Rules) do quản trị viên đặt ra.
+- Nguyên lý hoạt động: "Ngầm chặn" (Implicit Deny) - Nếu không có luật nào
+  cho phép cụ thể, tự động CHẶN hết.
+
+II. CÁC THẾ HỆ TƯỜNG LỬA (Theo sự tiến hóa)
+1. Tường lửa đời 1 (Packet Filtering - Lọc gói tin):
+   - Nhìn vào "vỏ bọc" của gói tin (địa chỉ IP, cổng Port).
+   - Ví dụ: Chặn IP xấu, chặn port 23 (Telnet).
+   - Nhược điểm: Không hiểu ngữ cảnh, dễ bị lừa, không đọc được nội dung.
+
+2. Tường lửa đời 2 (Stateful Inspection - Có trạng thái):
+   - Có "cuốn sổ ghi nhớ" (Connection Table) để theo dõi các kết nối.
+   - Cơ chế: Chỉ cho phép gói tin trả lời (Reply) đi vào nếu đã có gói tin
+     yêu cầu (Request) đi ra trước đó.
+   - Ví dụ: Máy trong nhà gửi ra Google -> Khi Google trả lời, nó mở cửa.
+   - Điểm yếu: Bị hacker giả mạo "thư trả lời" (IP Spoofing) vì nó không
+     đọc nội dung bên trong gói tin.
+
+3. Tường lửa đời 3 (NGFW - Next-Generation Firewall):
+   - Có khả năng "mở vali" (Deep Packet Inspection - DPI).
+   - Đọc và hiểu dữ liệu ở tầng ứng dụng (Lớp 7 - HTTP, FTP...).
+   - Phát hiện được các lệnh tấn công như SQL Injection chui trong gói tin.
+   - Nâng cao: Gắn thêm IDS/IPS, nhận diện người dùng (User/Group) thay vì IP.
+
+III. CÁC TÍNH NĂNG NÂNG CAO & MỞ RỘNG
+A. IDS và IPS (Hệ thống phát hiện & ngăn chặn xâm nhập):
+   - IDS (Camera giám sát): Chỉ nhìn, phát hiện và báo động (Alert). KHÔNG can thiệp.
+   - IPS (Vệ sĩ): Đứng "trong luồng" (In-line). Phát hiện -> Chủ động chặn (Drop)
+     ngay lập tức.
+
+B. Phương pháp phát hiện:
+   - Signature (Dấu hiệu): So sánh với "danh sách tội phạm" có sẵn.
+     + Ưu: Chính xác. Nhược: Không bắt được lỗi mới (Zero-day).
+   - Anomaly (Hành vi): Dùng AI/Machine Learning học "hành vi bình thường".
+     + Nếu có bất thường (VD: đột nhiên gửi dữ liệu khổng lồ ra nước ngoài)
+       -> Báo động dù chưa biết đó là gì.
+
+IV. THÁCH THỨC VỚI TƯỜNG LỬA HIỆN ĐẠI (Vì sao vẫn bị hack?)
+- Lưu lượng mã hóa (HTTPS, VPN): Tường lửa đời 3 mở ra cũng chỉ thấy rác.
+  -> Giải pháp: Bật SSL Inspection (giải mã bắt buộc) nhưng làm chậm mạng đáng kể.
+- Tấn công tầng ứng dụng phức tạp: Dùng mã độc đa hình, thay đổi liên tục.
+- Đường tắt tấn công: Hack trực tiếp vào người dùng (lừa đảo - Phishing) thay vì
+  tấn công vào tường lửa.
+
+V. "TAM GIÁC BẤT KHẢ THI" CỦA BẢO MẬT (Trade-off)
+Nguyên lý: CHỈ ĐƯỢC CHỌN 2 trong 3 yếu tố:
+     1. BẢO MẬT cao
+     2. HIỆU NĂNG (Tốc độ) cao
+     3. CHI PHÍ (Giá thành) thấp
+
+- Bảo mật cao + Nhanh = RẤT ĐẮT (VD: Mua siêu máy chủ, chip ASIC chuyên dụng).
+- Bảo mật cao + Rẻ = RẤT CHẬM (VD: Bật hết tính năng trên máy tính cùi).
+- Nhanh + Rẻ = MẤT AN TOÀN (VD: Dùng tường lửa của nhà mạng có sẵn).
+
