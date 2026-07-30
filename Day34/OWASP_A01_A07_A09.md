@@ -3,16 +3,6 @@
 
 ---
 
-## 🎯 MỤC LỤC
-
-1. [A01: Broken Access Control](#1-a01-broken-access-control)
-2. [A07: Authentication Failures](#2-a07-authentication-failures)
-3. [A09: Logging & Alerting Failures](#3-a09-logging--alerting-failures)
-4. [So sánh Horizontal vs Vertical](#4-so-sánh-horizontal-vs-vertical)
-
-
----
-
 ## 1. A01: BROKEN ACCESS CONTROL
 
 ### Định nghĩa
