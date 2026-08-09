@@ -120,9 +120,9 @@ Kết quả: Một bảng duy nhất chứa cả thông tin tiến trình và lo
 
 1. Phát hiện bất thường theo quốc gia
 
-Ý tưởng: Mỗi user thường chỉ đăng nhập từ 1-2 quốc gia quen thuộc. Nếu một user đăng nhập từ quốc gia khác với tần suất rất thấp, đó là dấu hiệu đáng ngờ.
+- Ý tưởng: Mỗi user thường chỉ đăng nhập từ 1-2 quốc gia quen thuộc. Nếu một user đăng nhập từ quốc gia khác với tần suất rất thấp, đó là dấu hiệu đáng ngờ.
 
-Các bước thực hiện
+- Các bước thực hiện
 
     + Đếm tổng số lần đăng nhập của mỗi user.
 
@@ -145,9 +145,9 @@ Kết quả: Phát hiện user kbrown và hmiller đăng nhập từ quốc gia 
 
 2. Phát hiện bất thường theo giờ đăng nhập
 
-Ý tưởng: Mỗi user có thói quen đăng nhập riêng. Nếu họ đăng nhập vào giờ khác xa so với thói quen, đó là dấu hiệu đáng ngờ.
+- Ý tưởng: Mỗi user có thói quen đăng nhập riêng. Nếu họ đăng nhập vào giờ khác xa so với thói quen, đó là dấu hiệu đáng ngờ.
 
-Các biến số cần hiểu
+- Các biến số cần hiểu
 
     + hour: Giờ đăng nhập của sự kiện (dạng số, ví dụ 13.5).
 
@@ -173,6 +173,6 @@ Kết quả: Phát hiện user jsmith đăng nhập lúc 18:30 trong khi thói q
 
 3. Phát hiện nâng cao: Impossible Travel (Di chuyển bất khả thi)
 
-Phát hiện một người đăng nhập từ hai địa điểm quá xa nhau trong thời gian ngắn.
+- Phát hiện một người đăng nhập từ hai địa điểm quá xa nhau trong thời gian ngắn.
 
-Cần kết hợp iplocation để lấy vị trí địa lý và eventstats để tính khoảng cách, thời gian giữa các lần đăng nhập.
+- Cần kết hợp iplocation để lấy vị trí địa lý và eventstats để tính khoảng cách, thời gian giữa các lần đăng nhập.
