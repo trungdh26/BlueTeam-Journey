@@ -1,0 +1,28 @@
+Hướng dẫn cài đặt, setup môi trường
+
+A. THÔNG TIN MẠNG
+- Card Host-Only: VMware VMnet1 (192.168.188.0/24)
+- Gateway: 192.168.188.1 (Máy SOC - Win11)
+- DHCP Server: 192.168.188.254 (VMware DHCP)
+
+B. THÔNG TIN CẤU HÌNH CÁC MÁY:
+1. Máy tấn công (Kali Linux):
+   - Hostname: trung
+   - Cấu hình mạng: Host-Only
+   - Ip: 192.168.188.128
+   - Cài công cụ nmap, crowbar,hydra
+   - Chuẩn bị: 
+	+ file passwords.txt (đùng để tấn công brute-force)
+	+ file hacked.txt (mô phỏng thao tác của hacker sau khi bẻ khóa thành công)
+
+2. Máy nạn nhân (Win10 VM):
+   - Hostname: TrungDH
+   - IP: 192.168.188.129
+   - Cấu hình mạng: Host-Only
+   - Bật RDP (cho phép truy cập từ xa)
+   - Cài Splunk Universal Forwarder   
+
+3. Máy của SOC Analyst (Máy thật win11)
+   - Ip: 192.168.188.1
+   - Cài Splunk, wireshark để điều tra, truy vết.
+

@@ -1,0 +1,42 @@
+Kịch bản:
+
+1. Hacker:
+   - Quét mạng: nmap -sn 192.168.188.0/24 (phát hiện máy nạn nhân)
+   - Quét cổng: nmap -p 3389 192.168.188.129 (xác nhận RDP đang mở)
+   - Tấn công brute-force: crowbar -b rdp -u hacker -C passwords.txt -s 192.168.188.129
+   - Đăng nhập thành công (mật khẩu: 123456)
+   - Tạo file ẩn: echo "Máy nạn nhân đã bị hack" > /tmp/hacked.txt (trên máy nạn nhân)
+   - Xóa dấu vết: xóa log (tùy chọn) và rời đi
+
+2. SOC Analyst:
+   2.1. Thu thập log:
+      - Kiểm tra Splunk Forwarder đã nhận log từ máy nạn nhân chưa
+      - Xác nhận dữ liệu đã về Splunk (index=main)
+      
+   2.2. Phát hiện bất thường:
+      - Truy vấn SPL 1: Phát hiện brute-force (nhiều lần thất bại)
+    
+	 index=main EventCode=4625 Logon_Type=10 
+        | stats count by src_ip, user 
+        | where count > 10
+      
+      - Truy vấn SPL 2: Xác nhận đăng nhập thành công từ IP lạ
+
+        index=main EventCode=4624 Logon_Type=10 src_ip=192.168.188.128
+      
+      - Truy vấn SPL 3: Tìm hành động bất thường sau đăng nhập
+
+        index=main EventCode=4663 (tạo file) hoặc EventCode=4688 (tiến trình mới)
+      
+   2.3. Phân tích Wireshark:
+      - Bắt gói tin trên card Host-Only (VMnet1)
+      - Lọc lưu lượng RDP: tcp.port == 3389
+      - Quan sát hàng loạt kết nối SYN từ IP 192.168.188.128
+      - Phát hiện kết nối thành công (không bị RST ngay lập tức)
+      
+   2.4. Ứng phó sự cố (Incident Response):
+      - Kết nối RDP vào máy nạn nhân
+      - Xác minh và xóa file hacked.txt
+      - Vô hiệu hóa user "hacker" hoặc đổi mật khẩu
+      - Chặn IP 192.168.188.128 trên Firewall (tùy chọn)
+      - Báo cáo sự việc
