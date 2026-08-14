@@ -1,0 +1,43 @@
+REQUIREMENTS
+
+A. TRÊN MÁY TẤN CÔNG (KALI LINUX - 192.168.188.128)
+Công cụ cần cài:
+  - nmap                    # Quét mạng, phát hiện cổng RDP
+  - crowbar                 # Brute-force RDP (hỗ trợ NLA)
+  - hydra (tùy chọn)        # Brute-force đa giao thức
+  - xfreerdp                # Client RDP cho Linux
+
+Lệnh cài đặt:
+  sudo apt update
+  sudo apt install nmap crowbar hydra freerdp2-x11 -y
+
+File chuẩn bị:
+  - passwords.txt           # Wordlist chứa 100 mật khẩu phổ biến
+  - hacked.txt              # File ẩn để cài vào máy nạn nhân
+
+B. TRÊN MÁY NẠN NHÂN (WINDOWS 10 - 192.168.188.129)
+Phần mềm cần cài:
+  - Splunk Universal Forwarder 
+Yêu cầu cấu hình:
+  - Bật RDP Host (Remote Desktop)
+  - Tạo hoặc sử dụng user với mật khẩu yếu (VD: 123456)
+  - Cổng 3389 mở (mặc định)
+
+Link tải:
+  https://www.splunk.com/en_us/download/universal-forwarder.html
+
+Cấu hình Forwarder:
+  - Forward Server: 192.168.188.1:9997
+
+C. TRÊN MÁY SOC ANALYST (WINDOWS 11 - 192.168.188.1)
+Phần mềm cần cài:
+  - Splunk Enterprise        
+  - Wireshark                       
+Link tải:
+  - Splunk: https://www.splunk.com/en_us/download/splunk-enterprise.html
+  - Wireshark: https://www.wireshark.org/download.html
+
+Cấu hình Splunk:
+  - Receiving Port: 9997
+  - Web Interface: http://192.168.188.1:8000
+
